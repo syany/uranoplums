@@ -1,0 +1,12 @@
+/**
+ * [ルーマニア語]用 DateFormatSymbols JSONデータ.
+ */
+{
+	Eras: ["d.C.", "î.d.C."],
+	MonthNames: ["ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie", "august", "septembrie", "octombrie", "noiembrie", "decembrie", ""],
+	MonthAbbreviations: ["Ian", "Feb", "Mar", "Apr", "Mai", "Iun", "Iul", "Aug", "Sep", "Oct", "Nov", "Dec", ""],
+	AmPmMarkers: ["AM", "PM"],
+	DayNames: ["", "duminică", "luni", "marţi", "miercuri", "joi", "vineri", "sâmbătă"],
+	DayAbbreviations: ["", "D", "L", "Ma", "Mi", "J", "V", "S"],
+	DateTimePatternChars: "GanjkHmsSEDFwWxhKzZ"
+}

@@ -1,0 +1,17 @@
+/**
+ * UraDateFormatSymbols 向けラベル
+ */
+{
+	"AmPmMarkers": [ "AM", "PM" ],
+	"Eras": [ "BC", "AD" ],
+	"DateTimePatternChars": "GyMdkHmsSEDFwWahKzZ",
+	"MonthNames": [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December", "" ],
+	"MonthAbbreviations": [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "" ],
+	"DayAbbreviations": [ "", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" ],
+	"DayNames": [ "", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ],
+	"LocaleEra": [ "BC", "AD" ],
+	"LocaleYear":[-210835210493042, -62135799293042]
+	/*
+	"LocaleYear":["-4712-01-01", "0000-01-01"]
+	*/
+}

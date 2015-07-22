@@ -1,0 +1,12 @@
+/**
+ * [イタリア語 (スイス)]用 DateFormatSymbols JSONデータ.
+ */
+{
+	Eras: ["BC", "dopo Cristo"],
+	MonthNames: ["gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno", "luglio", "agosto", "settembre", "ottobre", "novembre", "dicembre", ""],
+	MonthAbbreviations: ["gen", "feb", "mar", "apr", "mag", "giu", "lug", "ago", "set", "ott", "nov", "dic", ""],
+	AmPmMarkers: ["AM", "PM"],
+	DayNames: ["", "domenica", "lunedì", "martedì", "mercoledì", "giovedì", "venerdì", "sabato"],
+	DayAbbreviations: ["", "dom", "lun", "mar", "mer", "gio", "ven", "sab"],
+	DateTimePatternChars: "GuMtkHmsSEDFwWahKzZ"
+}

@@ -1,0 +1,12 @@
+/**
+ * [ブルガリア語 (ブルガリア)]用 DateFormatSymbols JSONデータ.
+ */
+{
+	Eras: ["пр.н.е.", "н.е."],
+	MonthNames: ["Януари", "Февруари", "Март", "Април", "Май", "Юни", "Юли", "Август", "Септември", "Октомври", "Ноември", "Декември", ""],
+	MonthAbbreviations: ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", ""],
+	AmPmMarkers: ["AM", "PM"],
+	DayNames: ["", "Неделя", "Понеделник", "Вторник", "Сряда", "Четвъртък", "Петък", "Събота"],
+	DayAbbreviations: ["", "Нд", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
+	DateTimePatternChars: "GanjkHmsSEDFwWxhKzZ"
+}

@@ -1,0 +1,12 @@
+/**
+ * [ラトビア語 (レット語)]用 DateFormatSymbols JSONデータ.
+ */
+{
+	Eras: ["pmē", "mē"],
+	MonthNames: ["janvāris", "februāris", "marts", "aprīlis", "maijs", "jūnijs", "jūlijs", "augusts", "septembris", "oktobris", "novembris", "decembris", ""],
+	MonthAbbreviations: ["Jan", "Feb", "Mar", "Apr", "Maijs", "Jūn", "Jūl", "Aug", "Sep", "Okt", "Nov", "Dec", ""],
+	AmPmMarkers: ["AM", "PM"],
+	DayNames: ["", "svētdiena", "pirmdiena", "otrdiena", "trešdiena", "ceturtdiena", "piektdiena", "sestdiena"],
+	DayAbbreviations: ["", "Sv", "P", "O", "T", "C", "Pk", "S"],
+	DateTimePatternChars: "GanjkHmsSEDFwWxhKzZ"
+}

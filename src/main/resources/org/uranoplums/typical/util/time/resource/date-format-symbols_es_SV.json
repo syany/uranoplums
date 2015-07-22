@@ -1,0 +1,12 @@
+/**
+ * [スペイン語 (エルサルバドル)]用 DateFormatSymbols JSONデータ.
+ */
+{
+	Eras: ["BC", "AD"],
+	MonthNames: ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre", ""],
+	MonthAbbreviations: ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic", ""],
+	AmPmMarkers: ["AM", "PM"],
+	DayNames: ["", "domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"],
+	DayAbbreviations: ["", "dom", "lun", "mar", "mié", "jue", "vie", "sáb"],
+	DateTimePatternChars: "GyMdkHmsSEDFwWahKzZ"
+}

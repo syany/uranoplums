@@ -1,0 +1,12 @@
+/**
+ * [デンマーク語]用 DateFormatSymbols JSONデータ.
+ */
+{
+	Eras: ["BC", "AD"],
+	MonthNames: ["januar", "februar", "marts", "april", "maj", "juni", "juli", "august", "september", "oktober", "november", "december", ""],
+	MonthAbbreviations: ["jan", "feb", "mar", "apr", "maj", "jun", "jul", "aug", "sep", "okt", "nov", "dec", ""],
+	AmPmMarkers: ["AM", "PM"],
+	DayNames: ["", "søndag", "mandag", "tirsdag", "onsdag", "torsdag", "fredag", "lørdag"],
+	DayAbbreviations: ["", "sø", "ma", "ti", "on", "to", "fr", "lø"],
+	DateTimePatternChars: "GuMtkHmsSEDFwWahKzZ"
+}

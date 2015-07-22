@@ -1,0 +1,12 @@
+/**
+ * [スロバキア語]用 DateFormatSymbols JSONデータ.
+ */
+{
+	Eras: ["pred n.l.", "n.l."],
+	MonthNames: ["január", "február", "marec", "apríl", "máj", "jún", "júl", "august", "september", "október", "november", "december", ""],
+	MonthAbbreviations: ["jan", "feb", "mar", "apr", "máj", "jún", "júl", "aug", "sep", "okt", "nov", "dec", ""],
+	AmPmMarkers: ["AM", "PM"],
+	DayNames: ["", "Nedeľa", "Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota"],
+	DayAbbreviations: ["", "Ne", "Po", "Ut", "St", "Št", "Pi", "So"],
+	DateTimePatternChars: "GanjkHmsSEDFwWxhKzZ"
+}

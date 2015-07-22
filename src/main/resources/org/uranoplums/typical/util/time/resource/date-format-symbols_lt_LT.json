@@ -1,0 +1,12 @@
+/**
+ * [リトアニア語 (リトアニア)]用 DateFormatSymbols JSONデータ.
+ */
+{
+	Eras: ["pr.Kr.", "po.Kr."],
+	MonthNames: ["Sausio", "Vasario", "Kovo", "Balandžio", "Gegužės", "Birželio", "Liepos", "Rugpjūčio", "Rugsėjo", "Spalio", "Lapkričio", "Gruodžio", ""],
+	MonthAbbreviations: ["Sau", "Vas", "Kov", "Bal", "Geg", "Bir", "Lie", "Rgp", "Rgs", "Spa", "Lap", "Grd", ""],
+	AmPmMarkers: ["AM", "PM"],
+	DayNames: ["", "Sekmadienis", "Pirmadienis", "Antradienis", "Trečiadienis", "Ketvirtadienis", "Penktadienis", "Šeštadienis"],
+	DayAbbreviations: ["", "Sk", "Pr", "An", "Tr", "Kt", "Pn", "Št"],
+	DateTimePatternChars: "GanjkHmsSEDFwWxhKzZ"
+}

@@ -1,0 +1,12 @@
+/**
+ * [ハンガリー語]用 DateFormatSymbols JSONデータ.
+ */
+{
+	Eras: ["i.e.", "i.u."],
+	MonthNames: ["január", "február", "március", "április", "május", "június", "július", "augusztus", "szeptember", "október", "november", "december", ""],
+	MonthAbbreviations: ["jan.", "febr.", "márc.", "ápr.", "máj.", "jún.", "júl.", "aug.", "szept.", "okt.", "nov.", "dec.", ""],
+	AmPmMarkers: ["DE", "DU"],
+	DayNames: ["", "vasárnap", "hétfő", "kedd", "szerda", "csütörtök", "péntek", "szombat"],
+	DayAbbreviations: ["", "V", "H", "K", "Sze", "Cs", "P", "Szo"],
+	DateTimePatternChars: "GanjkHmsSEDFwWxhKzZ"
+}

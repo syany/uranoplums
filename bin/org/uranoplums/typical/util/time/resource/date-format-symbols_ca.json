@@ -1,0 +1,12 @@
+/**
+ * [カタロニア語]用 DateFormatSymbols JSONデータ.
+ */
+{
+	Eras: ["BC", "AD"],
+	MonthNames: ["gener", "febrer", "març", "abril", "maig", "juny", "juliol", "agost", "setembre", "octubre", "novembre", "desembre", ""],
+	MonthAbbreviations: ["gen.", "feb.", "març", "abr.", "maig", "juny", "jul.", "ag.", "set.", "oct.", "nov.", "des.", ""],
+	AmPmMarkers: ["AM", "PM"],
+	DayNames: ["", "diumenge", "dilluns", "dimarts", "dimecres", "dijous", "divendres", "dissabte"],
+	DayAbbreviations: ["", "dg.", "dl.", "dt.", "dc.", "dj.", "dv.", "ds."],
+	DateTimePatternChars: "GuMtkHmsSEDFwWahKzZ"
+}
