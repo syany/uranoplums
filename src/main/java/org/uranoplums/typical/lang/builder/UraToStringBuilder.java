@@ -136,25 +136,34 @@ public class UraToStringBuilder extends ReflectionToStringBuilder {
                 result = true;
             }
             // 且つ、対象外フィールドでないことが条件となる
-            if (this.getExcludeFieldNames() != null
-                    && Arrays.binarySearch(this.getExcludeFieldNames(),
-                            field.getName()) >= 0) {
+            String[] excludeFieldNames = null;
+            try {
+                excludeFieldNames = this.getExcludeFieldNames();
+            } catch (NullPointerException ex) {
+                // excludeFieldNames is null.
+            }
+            if (excludeFieldNames != null
+                    && Arrays.binarySearch(excludeFieldNames, field.getName()) >= 0) {
                 // Reject fields from the getExcludeFieldNames list.
                 result = false;
             }
             //
             return result;
         }
-        // else {
         // 追加対象パターンがなければ、通常ReflectonToStringBuilderと同様の動き
-        if (this.excludeFieldNames != null
-                && this.getExcludeFieldNames() != null
-                && Arrays.binarySearch(this.getExcludeFieldNames(),
-                        field.getName()) >= 0) {
-            // Reject fields from the getExcludeFieldNames list.
-            return false;
+        if (this.excludeFieldNames != null) {
+            String[] excludeFieldNames = null;
+            try {
+                excludeFieldNames = this.getExcludeFieldNames();
+            } catch (NullPointerException ex) {
+                // excludeFieldNames is null.
+            }
+            if (excludeFieldNames != null
+                    && Arrays.binarySearch(excludeFieldNames, field.getName()) >= 0) {
+                // Reject fields from the getExcludeFieldNames list.
+                return false;
+            }
         }
-        // }
         return true;
     }
 

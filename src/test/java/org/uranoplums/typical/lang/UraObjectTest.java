@@ -24,13 +24,13 @@ import static org.uranoplums.typical.collection.factory.UraMapFactory.*;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.uranoplums.typical.lang.builder.UraMultiLineToStringStyle;
+import org.uranoplums.typical.lang.builder.UraToStringBuilder;
 
 /**
  * UraObjectTestクラス。<br>
@@ -73,31 +73,58 @@ public class UraObjectTest {
      */
     @Test
     public void testToString() {
-        final Hoge hoge = new Hoge();
+        final Ken ken = new Ken();
         System.out.println("Dump:");
-        System.out.println(hoge.toStringMulti());
+        System.out.println(ken.toStringMulti());
+        assertTrue(true);
+    }
+
+    @Test
+    public void testIncludeFieldNamesPerttern() {
+
+        final LimitToStringObject obj = new LimitToStringObject();
+        String output = new UraToStringBuilder(obj)
+            .setIncludeFieldNamesPerttern("i")
+            .setExcludeFieldNames("id")
+            .toString();
+        System.out.println("res: {");
+        System.out.println(output);
+        System.out.println("}");
         assertTrue(true);
     }
 }
 
-class Hoge {
-    public String abc = "testMemberABC";
-    public HogeList hogeList = new HogeList();
+class LimitToStringObject {
+    int id = 890;
+    long max = 60000;
+    String limitstr = "制限付きオブジェクト";
+    List<String> list = newArrayList();
     {
-        hogeList.id = "ggg";
-        hogeList.list.add("345");
-        hogeList.list.add("we3");
-        hogeList.list.add("12r");
-        hogeList.map.put("rrr", "ptr");
-        hogeList.map.put("uio", new String[2]);
+        list.add("345");
+        list.add("we3");
+        list.add("12r");
+    }
+}
+
+class Ken {
+    public String abc = "testMemberABC";
+    public Aki aki = new Aki();
+    {
+        aki.id = "ggg";
+        aki.list.add("345");
+        aki.list.add("we3");
+        aki.list.add("12r");
+        aki.map.put("rrr", "ptr");
+        aki.map.put("uio", new String[2]);
         //hogeList.map.put("tyu", new HogeList());
     }
     public String toStringMulti() {
 //        return UraToStringBuilder.reflectionToString(this, UraMultiLineToStringStyle.INSTANCE);
-        return ToStringBuilder.reflectionToString(this, UraMultiLineToStringStyle.INSTANCE);
+        //return UraToStringBuilder.reflectionToString(this, UraMultiLineToStringStyle.INSTANCE);
+        return new UraToStringBuilder(this, UraMultiLineToStringStyle.INSTANCE).toString();
     }
 }
-class HogeList {
+class Aki {
     public String id = "12";
     public String name = "hoge name";
     public int age = 32;
@@ -109,7 +136,7 @@ class HogeList {
     @Override
     public String toString() {
         //return UraToStringBuilder.reflectionToString(this, UraMultiLineToStringStyle.INSTANCE);
-        return ToStringBuilder.reflectionToString(this, UraMultiLineToStringStyle.INSTANCE);
+        return new UraToStringBuilder(this, UraMultiLineToStringStyle.INSTANCE).toString();
     }
 
 }
