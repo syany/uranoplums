@@ -82,28 +82,54 @@ public class UraObjectTest {
     @Test
     public void testIncludeFieldNamesPerttern() {
 
-        final LimitToStringObject obj = new LimitToStringObject();
-        String output = new UraToStringBuilder(obj)
-            .setIncludeFieldNamesPerttern("i")
-            .setExcludeFieldNames("id")
+        final PxxSearch pxxSearch = new PxxSearch();
+        String output = new UraToStringBuilder(pxxSearch)
+            .setIncludeFieldNamesPerttern("^pxx")
+            .setExcludeFieldNames("pxxId")
             .toString();
         System.out.println("res: {");
         System.out.println(output);
         System.out.println("}");
         assertTrue(true);
     }
+    @Test
+    public void testToMultiStringFilter() {
+        final ScSearch scSearch = new ScSearch();
+        String output = scSearch.toMultiStringFilter("^sc");
+        System.out.println("res:");
+        System.out.println(output);
+        assertTrue(true);
+    }
 }
 
-class LimitToStringObject {
-    int id = 890;
-    long max = 60000;
-    String limitstr = "制限付きオブジェクト";
-    List<String> list = newArrayList();
+class PxxSearch {
+    int pxxId = 890;
+    long pxxMax = 60000;
+    String pxxLimitstr = "制限付きオブジェクト";
+    List<String> pxxList = newArrayList();
     {
-        list.add("345");
-        list.add("we3");
-        list.add("12r");
+        pxxList.add("345");
+        pxxList.add("we3");
+        pxxList.add("12r");
     }
+}
+
+class ScSearch extends UraObject {
+    int scId = 890;
+    long scMax = 60000;
+    String scLimitstr = "制限付きオブジェクト";
+    ScChildSearch scChild = new ScChildSearch();
+    List<String> scList = newArrayList();
+    {
+        scList.add("345");
+        scList.add("we3");
+        scList.add("12r");
+    }
+}
+
+class ScChildSearch extends UraObject {
+    int scAge = 98;
+    String comment = "抜けない。。。";
 }
 
 class Ken {
