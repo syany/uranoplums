@@ -5,8 +5,8 @@ package org.uranoplums.typical.util.i18n;
 
 import static org.junit.Assert.*;
 
-import org.atilika.kuromoji.Token;
-import org.atilika.kuromoji.Tokenizer;
+//import org.atilika.kuromoji.Token;
+//import org.atilika.kuromoji.Tokenizer;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -20,7 +20,7 @@ import org.uranoplums.typical.interceptor.AbsUraTimingFunctionInterceptor;
  */
 public class UraRomanTranslateUtilsTest {
 
-	static Tokenizer tokenizer;
+//	static Tokenizer tokenizer;
 	static String[] dict = {
 		"カァサン, "
 		,"1ヶゲツ"
@@ -38,7 +38,7 @@ public class UraRomanTranslateUtilsTest {
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-        tokenizer = Tokenizer.builder().build();
+//        tokenizer = Tokenizer.builder().build();
 	}
 
 	/**
@@ -236,38 +236,33 @@ public class UraRomanTranslateUtilsTest {
 		assertEquals(UraRomanTranslationUtils.kanaToHepburn("おお"), "O");
 	}
 
-	@Test
-	public final void testWords() {
-		StringBuilder sb = new StringBuilder();
-		for(Token t: tokenizer.tokenize("遠足に行く姉さんの笑顔と、母さんのドヤ顔")) {
-			String s = UraRomanTranslationUtils.kanaToHepburn((t.getReading() != null)?t.getReading():t.getSurfaceForm(), 0);
-			sb.append(UraJaStringUtils.capitalize(s.toLowerCase()));
-		}
-//		assertEquals(sb.toString(), "");
-        assertTrue(true);
-	}
-	@Test
-	public final void testWords2() {
-		StringBuilder sb = new StringBuilder();
-		//for(int i = 0; i < 10; i++) {
-		for(Token t: tokenizer.tokenize("いすゞ、映画を見に行きましょう。証券番号")) {
-			String s = UraRomanTranslationUtils.kanaToHepburn((t.getReading() != null)?t.getReading():t.getSurfaceForm(), 0);
-			sb.append(UraJaStringUtils.capitalize(s.toLowerCase()));
-		}
-		//}
-//		assertEquals(sb.toString(), "");
-        assertTrue(true);
-	}
-	@Test
-	public final void testWords3() {
-		StringBuilder sb = new StringBuilder();
-		for(Token t: tokenizer.tokenize("すゝめ、、づゝ、ぶゞ漬け映画を見に行きましょう。証券番号")) {
-			String s = UraRomanTranslationUtils.kanaToHepburn((t.getReading() != null)?t.getReading():t.getSurfaceForm(), 0);
-			sb.append(UraJaStringUtils.capitalize(s.toLowerCase()));
-		}
-//		assertEquals(sb.toString(), "");
-        assertTrue(true);
-	}
+//	@Test
+//	public final void testWords() {
+//		StringBuilder sb = new StringBuilder();
+//		for(Token t: tokenizer.tokenize("遠足に行く姉さんの笑顔と、母さんのドヤ顔")) {
+//			String s = UraRomanTranslationUtils.kanaToHepburn((t.getReading() != null)?t.getReading():t.getSurfaceForm(), 0);
+//			sb.append(UraJaStringUtils.capitalize(s.toLowerCase()));
+//		}
+//        assertTrue(true);
+//	}
+//	@Test
+//	public final void testWords2() {
+//		StringBuilder sb = new StringBuilder();
+//		for(Token t: tokenizer.tokenize("いすゞ、映画を見に行きましょう。証券番号")) {
+//			String s = UraRomanTranslationUtils.kanaToHepburn((t.getReading() != null)?t.getReading():t.getSurfaceForm(), 0);
+//			sb.append(UraJaStringUtils.capitalize(s.toLowerCase()));
+//		}
+//        assertTrue(true);
+//	}
+//	@Test
+//	public final void testWords3() {
+//		StringBuilder sb = new StringBuilder();
+//		for(Token t: tokenizer.tokenize("すゝめ、、づゝ、ぶゞ漬け映画を見に行きましょう。証券番号")) {
+//			String s = UraRomanTranslationUtils.kanaToHepburn((t.getReading() != null)?t.getReading():t.getSurfaceForm(), 0);
+//			sb.append(UraJaStringUtils.capitalize(s.toLowerCase()));
+//		}
+//        assertTrue(true);
+//	}
 	@Test
 	public final void testWords4() {
 		StringBuilder sb = new StringBuilder();

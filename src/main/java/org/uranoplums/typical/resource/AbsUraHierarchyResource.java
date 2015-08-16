@@ -1,18 +1,18 @@
 /*
  * Copyright 2013-2014 the Uranoplums Foundation and the Others.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
- * 
+ *
  * $Id: AbsUraHierarchyResource.java$
  */
 package org.uranoplums.typical.resource;
@@ -28,9 +28,9 @@ import org.uranoplums.typical.util.UraStringUtils;
 
 /*
  * 階層付きリソース抽象クラス。<br>
- * 
+ *
  * @since 2015/02/21
- * 
+ *
  * @author syany
  */
 public abstract class AbsUraHierarchyResource extends AbsUraResource<Object> {
@@ -49,7 +49,7 @@ public abstract class AbsUraHierarchyResource extends AbsUraResource<Object> {
 
     /*
      * (非 Javadoc)
-     * 
+     *
      * @see
      * org.uranoplums.typical.resource.AbsUraResource#getResourceValue(java.
      * util.Locale, java.lang.String, java.lang.Object[])
@@ -97,7 +97,7 @@ public abstract class AbsUraHierarchyResource extends AbsUraResource<Object> {
 
     /*
      * (非 Javadoc)
-     * 
+     *
      * @see
      * org.uranoplums.typical.resource.AbsUraResource#escapeValue(java.lang.
      * Object)
@@ -142,7 +142,7 @@ public abstract class AbsUraHierarchyResource extends AbsUraResource<Object> {
      * 別のキーを割り当てる<br>
      * 別のキーは$(キー名)で割り当てることができる。<br>
      * 取得時は元のロケールを引き継ぐ。
-     * 
+     *
      * @param locale
      * @param source
      * @return 取得した値オブジェクト
@@ -163,7 +163,7 @@ public abstract class AbsUraHierarchyResource extends AbsUraResource<Object> {
                     result.append(target.substring(lastOffset));
                     break;
                 }
-                // ${ がある場合
+                // $( がある場合
                 int findOffsetLast = findOffset + 2;
                 int findLastOffset = target.indexOf(")", findOffsetLast);
                 int findStartOffset = target.indexOf("$(", findOffsetLast);
@@ -172,12 +172,12 @@ public abstract class AbsUraHierarchyResource extends AbsUraResource<Object> {
                     break;
                 } else if (findStartOffset >= 0
                         && findStartOffset < findLastOffset) {
-                    // } があるが、${が先にある場合、とばす。
+                    // ) があるが、$(が先にある場合、とばす。
                     result.append(target.substring(lastOffset, findOffsetLast));
                     lastOffset = findOffset + 2;
                     continue;
                 }
-                // がある}
+                // ) がある
                 result.append(target.substring(lastOffset, findOffset));
                 String key = target.substring(findOffsetLast, findLastOffset);
                 String value = (String) _getResourceObject(locale, key,
@@ -185,7 +185,7 @@ public abstract class AbsUraHierarchyResource extends AbsUraResource<Object> {
                 if (value != null) {
                     result.append(value);
                 } else {
-                    // ${xxx}をそのまま入れる。
+                    // $(xxx)をそのまま入れる。
                     result.append(target.substring(findOffset,
                             findLastOffset + 1));
                 }

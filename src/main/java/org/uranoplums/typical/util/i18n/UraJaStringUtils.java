@@ -1,5 +1,6 @@
 /*
  * Copyright 2013-2014 the Uranoplums Foundation and the Others.
+ * Copyright (c) 2007 NTT DATA Corporation
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.

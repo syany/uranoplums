@@ -1,36 +1,35 @@
 /*
  * Copyright 2013-2014 the Uranoplums Foundation and the Others.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
- * 
+ *
  * $Id: AbsUraResource.java$
  */
 package org.uranoplums.typical.resource;
 
+import static org.uranoplums.typical.collection.factory.UraMapFactory.*;
+
 import java.io.IOException;
-import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.util.Locale;
 import java.util.concurrent.ConcurrentMap;
 
 import org.slf4j.Logger;
-import org.uranoplums.typical.lang.UraDataObject;
+import org.uranoplums.typical.lang.UraSerialDataObject;
 import org.uranoplums.typical.log.UraLoggerFactory;
 import org.uranoplums.typical.util.UraClassUtils;
 import org.uranoplums.typical.util.UraStringUtils;
 import org.uranoplums.typical.util.i18n.UraCharset;
-
-import static org.uranoplums.typical.collection.factory.UraMapFactory.*;
 
 /**
  * リソース操作抽象クラス。<br>
@@ -38,8 +37,7 @@ import static org.uranoplums.typical.collection.factory.UraMapFactory.*;
  * @author syany
  * @param <E>
  */
-public abstract class AbsUraResource<E> extends UraDataObject implements
-        Serializable {
+public abstract class AbsUraResource<E> extends UraSerialDataObject {
 
     /** シリアル・バージョンUID */
     private static final long serialVersionUID = -4934114159956513672L;
@@ -211,7 +209,7 @@ public abstract class AbsUraResource<E> extends UraDataObject implements
 
     /**
      * 存在確認します。
-     * 
+     *
      * @param locale
      * @param key
      * @return 存在する場合はtrue
