@@ -52,6 +52,54 @@ public abstract class AbsUraCodeLog<E extends Object> extends UraSerialDataObjec
     /**
      * @param logger
      */
+    public AbsUraCodeLog(org.slf4j.Logger logger) {
+        super();
+        this.logger = (Logger) logger;
+        this.uraCodeLevelJudge = this;
+        this.uraCodeMessageBundler = this;
+    }
+
+    /**
+     * @param logger
+     * @param uraCodeLevelJudge
+     */
+    public AbsUraCodeLog(org.slf4j.Logger logger,
+            final UraCodeLevelJudge<E> uraCodeLevelJudge) {
+        super();
+        this.logger = (Logger) logger;
+        this.uraCodeLevelJudge = uraCodeLevelJudge;
+        this.uraCodeMessageBundler = this;
+    }
+
+    /**
+     * @param logger
+     * @param uraCodeLevelJudge
+     * @param uraCodeMessageBundler
+     */
+    public AbsUraCodeLog(org.slf4j.Logger logger,
+            final UraCodeLevelJudge<E> uraCodeLevelJudge,
+            final UraCodeMessageBundler<E> uraCodeMessageBundler) {
+        super();
+        this.logger = (Logger) logger;
+        this.uraCodeLevelJudge = uraCodeLevelJudge;
+    }
+
+    /**
+     * @param logger
+     * @param uraCodeMessageBundler
+     */
+    public AbsUraCodeLog(org.slf4j.Logger logger,
+            final UraCodeMessageBundler<E> uraCodeMessageBundler) {
+        super();
+        this.logger = (Logger) logger;
+        this.uraCodeLevelJudge = this;
+        this.uraCodeMessageBundler = uraCodeMessageBundler;
+    }
+
+
+    /**
+     * @param logger
+     */
     public AbsUraCodeLog(Logger logger) {
         super();
         this.logger = logger;
@@ -428,7 +476,7 @@ public abstract class AbsUraCodeLog<E extends Object> extends UraSerialDataObjec
             Object... argArray) {
         filterAndLog_0_Or3Plus(marker,
                 this.uraCodeLevelJudge.toLevel(messageCode, Level.OFF),
-                this.uraCodeMessageBundler.getMessage(messageCode), argArray, t);
+                this.uraCodeMessageBundler.getMessage(messageCode, argArray), argArray, t);
     }
 
     /**

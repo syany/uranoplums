@@ -1,21 +1,24 @@
 /*
  * Copyright 2013-2015 the Uranoplums Foundation and the Others.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
- * 
+ *
  * $Id: UraDateFormat.java$
  */
 package org.uranoplums.typical.util.time;
+
+import static org.uranoplums.typical.collection.factory.UraListFactory.*;
+import static org.uranoplums.typical.collection.factory.UraMapFactory.*;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -39,6 +42,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.uranoplums.typical.collection.UraTuple;
+import org.uranoplums.typical.collection.factory.UraMapFactory.FACTOR;
 import org.uranoplums.typical.exception.UraParseRuntimeException;
 import org.uranoplums.typical.lang.UraObjectCommoner;
 import org.uranoplums.typical.lang.builder.UraMultiLineToStringStyle;
@@ -48,14 +52,9 @@ import org.uranoplums.typical.log.UraLoggerFactory;
 import org.uranoplums.typical.util.UraClassUtils;
 import org.uranoplums.typical.util.UraStringUtils;
 
-import org.uranoplums.typical.collection.factory.UraMapFactory.FACTOR;
-
-import static org.uranoplums.typical.collection.factory.UraListFactory.*;
-import static org.uranoplums.typical.collection.factory.UraMapFactory.*;
-
 /**
  * UraLightDateFormatクラス。<br>
- * 
+ *
  * @since 2015/05/07
  * @author syany
  */
@@ -777,7 +776,7 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
                     /*
                      * If we have found \E, we replace it with \E\\E\Q, i.e. we stop the quoting,
                      * quote the \ in \E, then restart the quoting.
-                     * 
+                     *
                      * Otherwise we just output the two characters.
                      * In each case the initial \ needs to be output and the final char is done at the end
                      */
@@ -922,7 +921,7 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
     /**
      * Create the object after serialization. This implementation reinitializes the
      * transient properties.
-     * 
+     *
      * @param in ObjectInputStream from which the object is being deserialized.
      * @throws IOException if there is an IO issue.
      * @throws ClassNotFoundException if a class cannot be found.
@@ -948,7 +947,7 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
 
     /**
      * Uranoplums向けStringToBuilderオブジェクトを返却します。<br>
-     * 
+     *
      * @param uraToStringBuilder
      * @return 指定日付書式の文字列 UraToStringBuilder
      */
@@ -959,7 +958,7 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
 
     /**
      * 。<br>
-     * 
+     *
      */
     protected void initialize() {}
 
@@ -1078,7 +1077,7 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
 
     /**
      * このオブジェクトのクローン(Shallow copy)を作成し、返却します。
-     * 
+     *
      * @return 指定日付書式の文字列 シャローコピーをした自オブジェクト
      * @see java.lang.Object#clone()
      */
@@ -1091,7 +1090,7 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
     /**
      * 本オブジェクトと引数オブジェクトが等しいか判定します。<br>
      * 比較には#hashCodeを利用します。
-     * 
+     *
      * @return 指定日付書式の文字列 (等価：true/不等価：false)
      * @see java.lang.Object#equals(java.lang.Object)
      */
@@ -1298,7 +1297,7 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
 
     /*
      * (非 Javadoc)
-     * 
+     *
      * @see java.text.Format#format(java.lang.Object, java.lang.StringBuffer, java.text.FieldPosition)
      */
     @Override
@@ -1386,7 +1385,7 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
 
     /**
      * 本オブジェクトのハッシュ値を返却します。
-     * 
+     *
      * @return 指定日付書式の文字列 ハッシュコード(Jakarta Common Lang HashCodeBuilderを使用)
      * @see java.lang.Object#hashCode()
      */
@@ -1576,7 +1575,7 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
 
     /*
      * (非 Javadoc)
-     * 
+     *
      * @see java.text.Format#parseObject(java.lang.String, java.text.ParsePosition)
      */
     @Override
@@ -1676,7 +1675,7 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
     /**
      * 本オブジェクト内容を読みやすい形で文字列で返却します。<br>
      * 複数フィールドを内包している場合、再帰的に対象オブジェクトのtoStringを呼び出します。
-     * 
+     *
      * @return 指定日付書式の文字列 本オブジェクトフィールド内容の文字列（改行付）
      */
     public String toMultiString() {
@@ -1693,7 +1692,7 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
     /**
      * 本オブジェクト内容を読みやすい形で文字列で返却します。<br>
      * 引数の変数名リストにあるパターンのみ出力します。
-     * 
+     *
      * @param strings 出力対象変数名パターン
      * @return 指定日付書式の文字列 本オブジェクトフィールド内容の文字列（改行付）
      */
@@ -1712,7 +1711,7 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
     /**
      * 本オブジェクト内容を文字列で返却します。<br>
      * 複数フィールドを内包している場合、再帰的に対象オブジェクトのtoStringを呼び出します。
-     * 
+     *
      * @return 指定日付書式の文字列 本オブジェクトフィールド内容の文字列
      * @see java.lang.Object#toString()
      */
@@ -1724,7 +1723,7 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
     /**
      * 本オブジェクト内容を文字列で返却します。<br>
      * 引数の変数名リストにあるパターンのみ出力します。
-     * 
+     *
      * @param strings 出力対象変数名パターン
      * @return 本オブジェクトフィールド内容の文字列
      */
@@ -1739,7 +1738,7 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
 
     /**
      * ParserFieldクラス。<br>
-     * 
+     *
      * @since 2015/05/19
      * @author syany
      */
@@ -1763,7 +1762,7 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
 
     /**
      * AbsParserFieldクラス。<br>
-     * 
+     *
      * @since 2015/05/21
      * @author syany
      */
@@ -1791,7 +1790,7 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
 
         /*
          * (非 Javadoc)
-         * 
+         *
          * @see org.uranoplums.typical.util.time.UraDateFormat.ParserField#nextField()
          */
         protected ParserField getNextField() {
@@ -1819,7 +1818,7 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
 
         /*
          * (非 Javadoc)
-         * 
+         *
          * @see
          * org.uranoplums.typical.util.time.UraDateFormat.ParserField#setNextField(org.uranoplums.typical.util.time.
          * UraDateFormat.ParserField)
@@ -1831,7 +1830,7 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
 
         /*
          * (非 Javadoc)
-         * 
+         *
          * @see org.uranoplums.typical.util.time.UraDateFormat.ParserField#setParseField(java.lang.String,
          * org.uranoplums.typical.util.time.UraCalendar, java.text.ParsePosition)
          */
@@ -1856,7 +1855,7 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
 
     /**
      * HourParserFieldクラス。<br>
-     * 
+     *
      * @since 2015/05/29
      * @author syany
      */
@@ -1873,7 +1872,7 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
 
         /*
          * (非 Javadoc)
-         * 
+         *
          * @see
          * org.uranoplums.typical.util.time.UraDateFormat.AbsParserField#setCalendar(org.uranoplums.typical.util.time
          * .UraCalendar, java.lang.String, java.util.Locale)
@@ -1893,7 +1892,7 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
 
     /**
      * NoParserFieldクラス。<br>
-     * 
+     *
      * @since 2015/05/24
      * @author syany
      */
@@ -1924,7 +1923,7 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
 
         /*
          * (非 Javadoc)
-         * 
+         *
          * @see
          * org.uranoplums.typical.util.time.UraDateFormat.ParserField#setNextField(org.uranoplums.typical.util.time.
          * UraDateFormat.ParserField)
@@ -1934,7 +1933,7 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
 
         /*
          * (非 Javadoc)
-         * 
+         *
          * @see org.uranoplums.typical.util.time.UraDateFormat.ParserField#setParseField(java.lang.String,
          * org.uranoplums.typical.util.time.UraCalendar, java.text.ParsePosition)
          */
@@ -1958,7 +1957,7 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
 
     /**
      * NumberParserFieldクラス。<br>
-     * 
+     *
      * @since 2015/05/21
      * @author syany
      */
@@ -1976,7 +1975,7 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
 
         /*
          * (非 Javadoc)
-         * 
+         *
          * @see
          * org.uranoplums.typical.util.time.UraDateFormat.AbsParserField#setNextField(org.uranoplums.typical.util.time
          * .UraDateFormat.ParserField)
@@ -1995,7 +1994,7 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
 
     /**
      * PrinterFieldインタフェース。<br>
-     * 
+     *
      * @since 2015/05/11
      * @author syany
      */
@@ -2013,7 +2012,7 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
 
     /**
      * TextParserFieldクラス。<br>
-     * 
+     *
      * @since 2015/05/24
      * @author syany
      */
@@ -2030,7 +2029,7 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
 
         /*
          * (非 Javadoc)
-         * 
+         *
          * @see
          * org.uranoplums.typical.util.time.UraDateFormat.AbsParserField#setCalendar(org.uranoplums.typical.util.time
          * .UraCalendar, java.lang.String)
@@ -2049,7 +2048,7 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
         protected void setKeyValue(Map<Integer, Pattern> fieldPatternMap, UraCalendar cal, Locale locale) {
             Map<String, Integer> keyValues = getDisplayNames(field, cal, locale);
             // フィールドの設定がない場合は、作成する。
-            StringBuilder regex = new StringBuilder();
+            StringBuilder regex = new StringBuilder(1024);
             for (final String textKeyValue : keyValues.keySet()) {
                 escapeRegex(regex, textKeyValue, false).append('|');
             }
@@ -2058,7 +2057,7 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
 
         /*
          * (非 Javadoc)
-         * 
+         *
          * @see org.uranoplums.typical.util.time.UraDateFormat.AbsParserField#setParseField(java.lang.String,
          * org.uranoplums.typical.util.time.UraCalendar, java.text.ParsePosition, java.util.Locale)
          */
@@ -2076,7 +2075,7 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
 
     /**
      * TimeZoneParserFieldクラス。<br>
-     * 
+     *
      * @since 2015/05/28
      * @author syany
      */
@@ -2114,7 +2113,7 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
 
         /*
          * (非 Javadoc)
-         * 
+         *
          * @see
          * org.uranoplums.typical.util.time.UraDateFormat.AbsParserField#setCalendar(org.uranoplums.typical.util.time
          * .UraCalendar, java.lang.String, java.util.Locale)
@@ -2169,7 +2168,7 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
                     }
                 }
             }
-            final StringBuilder regex = new StringBuilder();
+            final StringBuilder regex = new StringBuilder(1024);
             regex.append("GMT[+\\-]\\d{0,1}\\d{2}|[+\\-]\\d{2}:?\\d{2}");
             for (final String id : tzNames.keySet()) {
                 if (UraStringUtils.isEmpty(id)) {
@@ -2184,7 +2183,7 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
 
         /*
          * (非 Javadoc)
-         * 
+         *
          * @see org.uranoplums.typical.util.time.UraDateFormat.AbsParserField#setParseField(java.lang.String,
          * org.uranoplums.typical.util.time.UraCalendar, java.text.ParsePosition, java.util.Locale)
          */

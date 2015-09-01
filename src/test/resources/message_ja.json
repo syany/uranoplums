@@ -1,0 +1,9 @@
+/**
+ * message_ja
+ */
+{
+  ERR002 : "$(HEAD)～～に失敗しました。[ID={0}]$(FOOT)",
+  DBG001 : "$(HEAD)～～出力。[Object='{}']$(FOOT)",
+  HEAD   : "_/_/_/ ",
+  FOOT   : " _/_/_/"
+}

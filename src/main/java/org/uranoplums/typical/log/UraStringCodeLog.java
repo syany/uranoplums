@@ -1,32 +1,32 @@
 /*
  * Copyright 2013-2014 the Uranoplums Foundation and the Others.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
- * 
+ *
  * $Id: $
  */
 package org.uranoplums.typical.log;
 
 import java.io.ObjectStreamException;
 
+import org.slf4j.Logger;
 import org.uranoplums.typical.util.UraStringUtils;
 
 import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.Logger;
 
 /**
  * UraStringCodeLogクラス。<br>
- * 
+ *
  * @since 2015/02/24
  * @author syany
  */
@@ -36,6 +36,64 @@ public class UraStringCodeLog extends AbsUraCodeLog<String> {
     private static final long serialVersionUID = 1684011812281915098L;
 
     /**
+     * デフォルトコンストラクタ。<br>
+     * @param logger
+     * @param uraCodeLevelJudge
+     * @param uraCodeMessageBundler
+     */
+    public UraStringCodeLog(Logger logger, UraCodeLevelJudge<String> uraCodeLevelJudge, UraCodeMessageBundler<String> uraCodeMessageBundler) {
+        super(logger, uraCodeLevelJudge, uraCodeMessageBundler);
+    }
+
+    /**
+     * デフォルトコンストラクタ。<br>
+     * @param logger
+     * @param uraCodeLevelJudge
+     * @param uraCodeMessageBundler
+     */
+    public UraStringCodeLog(ch.qos.logback.classic.Logger logger, UraCodeLevelJudge<String> uraCodeLevelJudge,
+            UraCodeMessageBundler<String> uraCodeMessageBundler) {
+        super(logger, uraCodeLevelJudge, uraCodeMessageBundler);
+    }
+
+    /**
+     * デフォルトコンストラクタ。<br>
+     * @param logger
+     * @param uraCodeLevelJudge
+     */
+    public UraStringCodeLog(Logger logger, UraCodeLevelJudge<String> uraCodeLevelJudge) {
+        super(logger, uraCodeLevelJudge);
+    }
+
+    /**
+     * デフォルトコンストラクタ。<br>
+     * @param logger
+     * @param uraCodeLevelJudge
+     */
+    public UraStringCodeLog(ch.qos.logback.classic.Logger logger, UraCodeLevelJudge<String> uraCodeLevelJudge) {
+        super(logger, uraCodeLevelJudge);
+    }
+
+    /**
+     * デフォルトコンストラクタ。<br>
+     * @param logger
+     * @param uraCodeMessageBundler
+     */
+    public UraStringCodeLog(Logger logger, UraCodeMessageBundler<String> uraCodeMessageBundler) {
+        super(logger, uraCodeMessageBundler);
+    }
+
+    /**
+     * デフォルトコンストラクタ。<br>
+     * @param logger
+     * @param uraCodeMessageBundler
+     */
+    public UraStringCodeLog(ch.qos.logback.classic.Logger logger, UraCodeMessageBundler<String> uraCodeMessageBundler) {
+        super(logger, uraCodeMessageBundler);
+    }
+
+    /**
+     * デフォルトコンストラクタ。<br>
      * @param logger
      */
     public UraStringCodeLog(Logger logger) {
@@ -43,32 +101,11 @@ public class UraStringCodeLog extends AbsUraCodeLog<String> {
     }
 
     /**
+     * デフォルトコンストラクタ。<br>
      * @param logger
-     * @param uraCodeLevelJudge
      */
-    public UraStringCodeLog(Logger logger,
-            UraCodeLevelJudge<String> uraCodeLevelJudge) {
-        super(logger, uraCodeLevelJudge);
-    }
-
-    /**
-     * @param logger
-     * @param uraCodeLevelJudge
-     * @param uraCodeMessageBundler
-     */
-    public UraStringCodeLog(Logger logger,
-            UraCodeLevelJudge<String> uraCodeLevelJudge,
-            UraCodeMessageBundler<String> uraCodeMessageBundler) {
-        super(logger, uraCodeLevelJudge, uraCodeMessageBundler);
-    }
-
-    /**
-     * @param logger
-     * @param uraCodeMessageBundler
-     */
-    public UraStringCodeLog(Logger logger,
-            UraCodeMessageBundler<String> uraCodeMessageBundler) {
-        super(logger, uraCodeMessageBundler);
+    public UraStringCodeLog(ch.qos.logback.classic.Logger logger) {
+        super(logger);
     }
 
     /**
@@ -82,17 +119,17 @@ public class UraStringCodeLog extends AbsUraCodeLog<String> {
 
     /*
      * (非 Javadoc)
-     * 
+     *
      * @see org.uranoplums.typical.log.UraCodeMessageBundler#getMessage(null)
      */
     @Override
-    public String getMessage(String source) {
+    public String getMessage(String source, Object... argArray) {
         return source;
     }
 
     /*
      * (非 Javadoc)
-     * 
+     *
      * @see org.uranoplums.typical.log.UraCodeLevelJudge#toLevel(null, ch.qos.logback.classic.Level)
      */
     @Override

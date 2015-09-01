@@ -125,13 +125,17 @@ class CarDataObject extends UraDataObject {
 
 class ChildSerialDataObject extends UraSerialDataObject {
 
+    /**  */
+    private static final long serialVersionUID = -967693264092912433L;
     int id = 56;
-    String name = "tom";
+    transient String name = "tom";
     UraLog log = UraLoggerFactory.getUraLog();
 }
 
 class CarSerialDataObject extends UraSerialDataObject {
 
+    /**  */
+    private static final long serialVersionUID = -6379534315287036367L;
     public int no = 500;
     public ChildSerialDataObject child = new ChildSerialDataObject();
     public Map<String, Object> map = newHashMap();

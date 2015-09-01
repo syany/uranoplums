@@ -1,0 +1,9 @@
+/**
+ * message
+ */
+{
+  ERR002 : "$(HEAD)... failed.[ID='\{\}']$(FOOT)",
+  DBG001 : "$(HEAD)... Output.[Object='\{\}']$(FOOT)",
+  HEAD   : "_/_/_/ ",
+  FOOT   : " _/_/_/"
+}

@@ -1,18 +1,18 @@
 /*
  * Copyright 2013-2014 the Uranoplums Foundation and the Others.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
- * 
+ *
  * $Id: $
  */
 package org.uranoplums.typical.log;
@@ -24,7 +24,7 @@ import org.uranoplums.typical.lang.UraStaticObject;
 
 /**
  * UraLoggerFactoryクラス。<br>
- * 
+ *
  * @since 2015/02/24
  * @author syany
  */
@@ -35,7 +35,7 @@ public final class UraLoggerFactory extends UraStaticObject {
      * <p/>
      * <p/>
      * ILoggerFactory instance is bound with this class at compile time.
-     * 
+     *
      * @return the ILoggerFactory instance in use
      */
     public static ILoggerFactory getILoggerFactory() {
@@ -54,7 +54,7 @@ public final class UraLoggerFactory extends UraStaticObject {
     /**
      * Return a logger named corresponding to the class passed as parameter,
      * using the statically bound {@link ILoggerFactory} instance.
-     * 
+     *
      * @param clazz
      *            the returned logger will be named after clazz
      * @return logger
@@ -76,12 +76,13 @@ public final class UraLoggerFactory extends UraStaticObject {
     /**
      * Return a logger named according to the name parameter using the
      * statically bound {@link ILoggerFactory} instance.
-     * 
+     *
      * @param name
      *            The name of the logger.
      * @return logger
      */
     public static Logger getLogger(String name) {
+
         return LoggerFactory.getLogger(name);
     }
 
@@ -128,7 +129,7 @@ public final class UraLoggerFactory extends UraStaticObject {
      * @return UraStringCodeLogインスタンス
      */
     public static UraStringCodeLog getUraStringCodeLog(Class<?> clazz) {
-        return new UraStringCodeLog((ch.qos.logback.classic.Logger) getLogger(clazz));
+        return new UraStringCodeLog(getLogger(clazz));
     }
 
     /**
@@ -140,7 +141,7 @@ public final class UraLoggerFactory extends UraStaticObject {
     public static UraStringCodeLog getUraStringCodeLog(Class<?> clazz,
             UraCodeLevelJudge<String> uraCodeLevelJudge,
             UraCodeMessageBundler<String> uraCodeMessageBundler) {
-        return new UraStringCodeLog((ch.qos.logback.classic.Logger) getLogger(clazz), uraCodeLevelJudge, uraCodeMessageBundler);
+        return new UraStringCodeLog(getLogger(clazz), uraCodeLevelJudge, uraCodeMessageBundler);
     }
 
     /**
@@ -148,7 +149,7 @@ public final class UraLoggerFactory extends UraStaticObject {
      * @return UraStringCodeLogインスタンス
      */
     public static UraStringCodeLog getUraStringCodeLog(int callerDepth) {
-        return new UraStringCodeLog((ch.qos.logback.classic.Logger) getLogger(callerDepth));
+        return new UraStringCodeLog(getLogger(callerDepth));
     }
 
     /**
@@ -160,7 +161,7 @@ public final class UraLoggerFactory extends UraStaticObject {
     public static UraStringCodeLog getUraStringCodeLog(int callerDepth,
             UraCodeLevelJudge<String> uraCodeLevelJudge,
             UraCodeMessageBundler<String> uraCodeMessageBundler) {
-        return new UraStringCodeLog((ch.qos.logback.classic.Logger) getLogger(callerDepth), uraCodeLevelJudge, uraCodeMessageBundler);
+        return new UraStringCodeLog(getLogger(callerDepth), uraCodeLevelJudge, uraCodeMessageBundler);
     }
 
     /**
@@ -168,7 +169,7 @@ public final class UraLoggerFactory extends UraStaticObject {
      * @return UraStringCodeLogインスタンス
      */
     public static UraStringCodeLog getUraStringCodeLog(String name) {
-        return new UraStringCodeLog((ch.qos.logback.classic.Logger) getLogger(name));
+        return new UraStringCodeLog(getLogger(name));
     }
 
     /**
@@ -180,7 +181,7 @@ public final class UraLoggerFactory extends UraStaticObject {
     public static UraStringCodeLog getUraStringCodeLog(String name,
             UraCodeLevelJudge<String> uraCodeLevelJudge,
             UraCodeMessageBundler<String> uraCodeMessageBundler) {
-        return new UraStringCodeLog((ch.qos.logback.classic.Logger) getLogger(name), uraCodeLevelJudge, uraCodeMessageBundler);
+        return new UraStringCodeLog(getLogger(name), uraCodeLevelJudge, uraCodeMessageBundler);
     }
 
     /**
