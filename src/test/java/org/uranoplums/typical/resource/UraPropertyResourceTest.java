@@ -42,6 +42,8 @@ public class UraPropertyResourceTest {
         UraPropertyResource resource = new UraPropertyResource("message_test");
         System.out.println(resource.getResourceValue("test.004", "鍵"));
         System.out.println(resource.getResourceValue("test.005", "キー"));
+        System.out.println(resource.getResourceValue("test.006"));
+        System.out.println(resource.getResourceValue("test.007"));
         System.out.println(resource.getResourceValue("test.log.fileBase") + "ja.log");
         assertTrue(true);
     }

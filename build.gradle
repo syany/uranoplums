@@ -64,27 +64,54 @@ jar {
         attributes 'Implementation-Title': 'uranoplums Project',
                    'Implementation-Version': version
     }
-    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
 }
 
 uploadArchives {
     repositories {
-		mavenDeployer {
-			repository(url: "file:${mavenRepository}")
-		}
+        mavenDeployer {
+            repository(url: "file:${mavenRepository}")
+        }
     }
 }
 
 [install.repositories.mavenInstaller, uploadArchives.repositories.mavenDeployer]*.pom*.whenConfigured { pom ->
-	pom.project {
-		inceptionYear '2015'
-		packaging 'jar'
-		licenses {
-			license {
-				name 'The Apache Software License, Version 2.0'
-				url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-				distribution 'repo'
-			}
-		}
-	}
+    pom.project {
+        inceptionYear '2015'
+        packaging 'jar'
+        licenses {
+            license {
+                name 'The Apache Software License, Version 2.0'
+                url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                distribution 'repo'
+            }
+        }
+    }
+}
+
+task uploadArchivesAll(dependsOn: 'uploadArchives') << {
+}
+
+task jarAll(dependsOn: 'jar') << {
+}
+
+gradle.taskGraph.whenReady {taskGraph ->
+    if (taskGraph.hasTask(uploadArchivesAll)) {
+        jar {
+            println 'We uploadArchivesAll now'
+            from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+        }
+        uploadArchives.doFirst {
+            repositories {
+                mavenDeployer {
+                    repository(url: "file:${buildDir}/mavenIncludeAll")
+                }
+            }
+        }
+    }
+    if (taskGraph.hasTask(jarAll)) {
+        jar {
+            println 'We jarAll now'
+            from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+        }
+    }
 }

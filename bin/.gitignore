@@ -6,10 +6,9 @@
 /logback-test.xml
 /message.json
 /message_ja.json
-/message_test.properties
-/message_test_ja.properties
-/test_001.xml
-/message_test_ja.json
-/コピー - message_test_ja.json
 /message_test.json
-/message_test_en.json
+/message_test.properties
+/message_test_ja.json
+/message_test_ja.properties
+/message_test_ja.xml
+/test_001.xml

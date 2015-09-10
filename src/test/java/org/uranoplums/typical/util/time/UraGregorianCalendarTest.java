@@ -18,9 +18,11 @@
 package org.uranoplums.typical.util.time;
 
 import static org.junit.Assert.*;
+import static org.uranoplums.typical.collection.factory.UraListFactory.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -141,7 +143,7 @@ public class UraGregorianCalendarTest {
         for (Map.Entry<String, Integer> f : m2.entrySet()) {
             System.out.println("K[" + f.getKey() + "], V[" + f.getValue() + "]");
         }
-//        assertEquals("xxx", "");
+        // assertEquals("xxx", "");
         assertTrue(true);
     }
 
@@ -206,5 +208,34 @@ public class UraGregorianCalendarTest {
         actualCal.setMonthDispName("5月", locale);
         expectedCal.set(Calendar.MONTH, 4);
         assertEquals(expectedCal.getTimeInMillis(), actualCal.getTimeInMillis());
+    }
+
+    @Test
+    public void testClendarPattern01() {
+        // 基本の使い方
+        UraCalendar cal = UraCalendarUtils.newUraCalendar();
+        cal.addYear(-300);
+        String localeEra = cal.getLocaleEraDisplayName(Locale.JAPAN);
+        String localeYear = cal.getLocaleYearDisplayName(Locale.JAPAN);
+        System.out.println("今年の300年前は西暦" + cal.getYear() + "年で、和暦は" + localeEra + localeYear + "年です。");
+        System.out.println();
+        // 国別に出力したい場合
+        cal = UraCalendarUtils.newUraCalendar(2001, 5, 15);
+        // テスト的に日本、米国、イタリア、タイのロケールを設定
+        List<Locale> localeList = newArrayList();
+        localeList.add(Locale.JAPAN);
+        localeList.add(Locale.US);
+        localeList.add(Locale.ITALY);
+        localeList.add(new Locale("th", "TH"));
+        // ロケール別出力
+        System.out.println("newUraCalendar(2001, 5, 15)");
+        for(Locale loc: localeList) {
+            String locName = loc.getDisplayName();
+            String month = cal.getMonthDisplayName(UraCalendar.SHORT, loc);
+            String dayOfWeek = cal.getDayOfWeekDisplayName(UraCalendar.SHORT, loc);
+            System.out.println(" [" + cal.getYear() + "-"+ month + "-" + cal.getDayOfMonth() + "(" + dayOfWeek + ")] 国(" + locName + ")の場合");
+        }
+
+        assertTrue(true);
     }
 }

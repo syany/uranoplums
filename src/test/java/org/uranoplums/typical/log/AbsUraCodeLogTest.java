@@ -96,6 +96,24 @@ public class AbsUraCodeLogTest {
 
         assertTrue(true);
     }
+
+    @Test
+    public void testLoggerMDC() {
+        // スレッドID をTIDというキー名で MDC経由で追加する。
+        UraLoggingDiagnosticManager.getInstance().put("TID",
+                String.format("%d", Thread.currentThread().getId()),
+                "-- No Thread ID --");
+        // インスタンス化
+        UraLogger<String> logger = new CodeMessageLog(UraLoggerFactory.getLogger());
+        int id = 234;
+        // ログ出力例
+        logger.log("DBG001", id);
+        logger.log("ERR002", logger.toString());
+        // MDCで追加しているものを削除
+        UraLoggingDiagnosticManager.getInstance().removeAll();
+
+        assertTrue(true);
+    }
 }
 
 class AutoLevelLog extends AbsUraCodeLog<String> {

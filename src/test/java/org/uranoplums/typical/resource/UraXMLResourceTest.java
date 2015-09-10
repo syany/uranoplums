@@ -19,6 +19,9 @@ package org.uranoplums.typical.resource;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+import java.util.Map;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,10 +51,35 @@ public class UraXMLResourceTest {
     public void tearDown() throws Exception {}
 
     @Test
-    public void testXMLResource() {
+    public void testXMLResourceP() {
         resource = new UraXMLResource("test_001");
         resource.getResourceString("sTr2");
         //assertEquals(resource.getResourceString("sTr2"), "gmmb");
+        assertTrue(true);
+    }
+
+    @Test
+    public void testXMLResource() {
+
+        UraXMLResource xmlResource = new UraXMLResource("message_test");
+        List<String> list = xmlResource.getResourceList("test.003");
+        Map<String, Object> map = xmlResource.getResourceMap("test.002");
+        String value = xmlResource.getResourceString("test.001");
+        System.out.println("test.003:" + list.toString());
+        System.out.println("test.002:" + map.toString());
+        System.out.println("test.001:" + value);
+        assertTrue(true);
+    }
+    @Test
+    public void testXMLResource2() {
+
+        UraXMLResource xmlResource = new UraXMLResource("message_test");
+        List<String> list = xmlResource.getResourceList("test.003");
+        String value = xmlResource.getResourceString("test.004", "a-Z");
+        System.out.println("test.003:" + list.toString());
+        System.out.println("test.004:" + value);
+        System.out.println("test.003:" + list.toString());
+        System.out.println("test.004:" + value);
         assertTrue(true);
     }
 }

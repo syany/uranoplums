@@ -17,10 +17,15 @@
  */
 package org.uranoplums.typical.resource;
 
+import static org.uranoplums.typical.collection.factory.UraListFactory.*;
+import static org.uranoplums.typical.collection.factory.UraMapFactory.*;
+
+import java.lang.ref.SoftReference;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ConcurrentMap;
 
 import org.uranoplums.typical.util.UraClassUtils;
 import org.uranoplums.typical.util.UraObjectUtils;
@@ -38,6 +43,36 @@ public abstract class AbsUraHierarchyResource extends AbsUraResource<Object> {
     /** シリアルバージョンUID */
     private static final long serialVersionUID = 769481646054058590L;
     private static final Object[] BLANK_ARGS = new Object[0];
+    private static final ConcurrentMap<Locale, ConcurrentMap<String, SoftReference<Object>>> cachedInstances = newConcurrentHashMap(3);
+
+    protected static Object getCachedInstance(Locale locale, String key) {
+        ConcurrentMap<String, SoftReference<Object>> localeCacheMap = cachedInstances.get(locale);
+        if (localeCacheMap == null) {
+            localeCacheMap = newConcurrentHashMap(32);
+            cachedInstances.putIfAbsent(locale, localeCacheMap);
+            return null;
+        }
+        SoftReference<Object> ref = localeCacheMap.get(key);
+        if (ref == null) {
+            return null;
+        }
+        return ref.get();
+    }
+
+    protected static void putCachedInstance(Locale locale, String key, Object value) {
+        ConcurrentMap<String, SoftReference<Object>> localeCacheMap = cachedInstances.get(locale);
+        SoftReference<Object> ref = localeCacheMap.get(key);
+        if (ref == null || ref.get() == null) {
+            ref = new SoftReference<Object>(value);
+            SoftReference<Object> x = localeCacheMap.putIfAbsent(key, ref);
+            if (x != null) {
+                Object y = x.get();
+                if (y == null) {
+                     localeCacheMap.put(key, ref);
+                }
+            }
+        }
+    }
 
     /**
      * コンストラクタ。
@@ -57,8 +92,16 @@ public abstract class AbsUraHierarchyResource extends AbsUraResource<Object> {
     @Override
     protected Object _getResourceObject(Locale locale, String key, Object[] args) {
         logger.debug("> getResourceValue({}, {}, {})", locale, key, args);
-        Object value = super._getResourceObject(locale, key, args);
-        value = getSubResourceValue(locale, value);
+
+        // 他のキー値を変換も含まれる値が一回でも使用した場合は、キャッシュから取得。
+        Object value = getCachedInstance(locale, key);
+        if (value == null) {
+            // キャッシュに無ければ、変換しキャッシュへ入れ込む。
+            value = super._getResourceObject(locale, key, args);
+            value = getSubResourceValue(locale, value);
+            putCachedInstance(locale, key, value);
+        }
+
         if (value instanceof String) {
             MessageFormat format = null;
             String formatKey = valueKey(locale, key);
@@ -193,6 +236,25 @@ public abstract class AbsUraHierarchyResource extends AbsUraResource<Object> {
             }
             logger.trace("< return [{}]", result.toString());
             return result.toString();
+        } else if (source instanceof Map) {
+            // Map の場合、値を再帰的に取得する。
+            @SuppressWarnings ("unchecked")
+            Map<String, Object> orgSource =(Map<String, Object>)source;
+            Map<String, Object> newSource = newHashMap(orgSource.size());
+            for (Map.Entry<String, Object> entry: orgSource.entrySet()) {
+                Object value = getSubResourceValue(locale, entry.getValue());
+                newSource.put(entry.getKey(), value);
+            }
+            source = newSource;
+        } else if (source instanceof List) {
+            // リストの場合も同様
+            @SuppressWarnings ("unchecked")
+            List<Object> orgSource = (List<Object>)source;
+            List<Object> newSource = newArrayList(orgSource.size());
+            for (Object value: orgSource) {
+                newSource.add(getSubResourceValue(locale, value));
+            }
+            source = newSource;
         }
         logger.trace("< return [{}]", source);
         return source;

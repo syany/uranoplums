@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE RelativeLayout>
+<resources detail="message&amp;codes">
+  <test.001 value="文字列" />
+  <test.002 typecode="%">
+    <key>001</key><value>-</value>
+    <key>002</key><value>男</value>
+  </test.002>
+  <!-- 別のマップ追加方法 -->
+  <test.002 typecode="%" key="003" value="女" />
+  <test.003 typecode="@">
+    <value>10</value>
+  </test.003>
+  <!-- 別のリスト追加方法 -->
+  <test.003 typecode="@" value="20" />
+  <test.error value="エラーが発生しました。" />
+  <test.004 value="$(test.error) 英字のみ入力可能です。[{0}]" />
+  <test.003 typecode="@" value="$(test.error) リストに追加できます。" />
+</resources>
