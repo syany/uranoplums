@@ -8,6 +8,12 @@
     </layout>
   </appender>
 
+  <logger name="org.uranoplums.typical.resource" level="ERROR">
+  </logger>
+
+  <logger name="org.uranoplums.typical.log.AbsUraCodeLogTest" level="DEBUG">
+  </logger>
+
   <root>
     <level value="TRACE" />
     <appender-ref ref="STDOUT" />

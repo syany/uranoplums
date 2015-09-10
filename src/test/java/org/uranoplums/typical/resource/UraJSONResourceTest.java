@@ -7,6 +7,7 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,27 +18,39 @@ import org.junit.Test;
  */
 public class UraJSONResourceTest {
 
-    UraJSONResource jsonResource;
+    UraJSONResource jsonResourceTest;
 
     /**
      * @throws java.lang.Exception
      */
     @Before
     public void setUp() throws Exception {
-        jsonResource = new UraJSONResource("json_re");
+        jsonResourceTest = new UraJSONResource("json_re");
     }
 
     @Test
     public final void testTypeArrayGetResource() {
-        String[] val = jsonResource.getResourceArray(new String[0], Locale.getDefault(), "arrayTest");
+        String[] val = jsonResourceTest.getResourceArray(new String[0], Locale.getDefault(), "arrayTest");
         //assertEquals("MESXXDD_Test!", val[0]);
+        assertTrue(true);
+    }
+
+    @Test
+    public final void getResourceValue01() {
+        UraJSONResource jsonResource = new UraJSONResource("message_test");
+        List<String> list = jsonResource.getResourceList("test.003");
+        Map<String, Object> map = jsonResource.getResourceMap("test.002");
+        String value = jsonResource.getResourceString("test.001");
+        System.out.println("test.003:" + list.toString());
+        System.out.println("test.002:" + map.toString());
+        System.out.println("test.001:" + value);
         assertTrue(true);
     }
 
     @Test
     public final void testTypeListGetResource() {
         @SuppressWarnings ("unchecked")
-        List<String> val = jsonResource.getResourceValue(List.class, Locale.getDefault(), "arrayTest", "tt");
+        List<String> val = jsonResourceTest.getResourceValue(List.class, Locale.getDefault(), "arrayTest", "tt");
         //assertEquals("MESXXDD_Test!", val.toString());
         assertTrue(true);
     }
@@ -45,14 +58,14 @@ public class UraJSONResourceTest {
     @Test
     public final void testTypeListGetResource01() {
         @SuppressWarnings ("unchecked")
-        List<String> val = jsonResource.getResourceList(Locale.getDefault(), "arrayTest", "ee");
+        List<String> val = jsonResourceTest.getResourceList(Locale.getDefault(), "arrayTest", "ee");
         //assertEquals("MESXXDD_Test!", val.toString());
         assertTrue(true);
     }
 
     @Test
     public final void testTypeStringGetResource() {
-        String val = jsonResource.getResourceValue(String.class, Locale.getDefault(), "ray");
+        String val = jsonResourceTest.getResourceValue(String.class, Locale.getDefault(), "ray");
         //assertEquals("MESXXDD_Test!", val);
         assertTrue(true);
     }

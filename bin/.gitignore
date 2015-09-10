@@ -1,9 +1,15 @@
 /META-INF/
+/org/
 /date-format-symbols_ja_JP.json
 /json_re.json
 /json_re_ja.json
 /logback-test.xml
+/message.json
+/message_ja.json
 /message_test.properties
 /message_test_ja.properties
-/org/
 /test_001.xml
+/message_test_ja.json
+/コピー - message_test_ja.json
+/message_test.json
+/message_test_en.json

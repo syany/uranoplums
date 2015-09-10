@@ -1,18 +1,18 @@
 /*
  * Copyright 2013-2014 the Uranoplums Foundation and the Others.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
- * 
+ *
  * $Id: $
  */
 package org.uranoplums.typical.resource;
@@ -22,7 +22,7 @@ import java.util.Locale;
 
 /**
  * 文字列リソース操作抽象クラス。<br>
- * 
+ *
  * @since 2015/02/25
  * @author syany
  */
@@ -41,7 +41,7 @@ abstract public class AbsUraStringResource extends AbsUraResource<String> {
 
     /*
      * (非 Javadoc)
-     * 
+     *
      * @see org.uranoplums.typical.resource.AbsUraResource#getResourceValue(java.util.Locale, java.lang.String,
      * java.lang.Object[])
      */
@@ -71,7 +71,7 @@ abstract public class AbsUraStringResource extends AbsUraResource<String> {
 
     /*
      * (非 Javadoc)
-     * 
+     *
      * @see
      * org.uranoplums.typical.resource.AbsUraResource#escapeValue(java.lang.
      * Object)
@@ -146,7 +146,7 @@ abstract public class AbsUraStringResource extends AbsUraResource<String> {
      * @return
      */
     public String getResourceValue(Locale locale, String key, String... args) {
-        return super._getResourceObject(locale, key, args);
+        return this._getResourceObject(locale, key, args);
     }
 
     /**

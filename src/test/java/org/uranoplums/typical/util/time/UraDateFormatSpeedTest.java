@@ -17,11 +17,19 @@
  */
 package org.uranoplums.typical.util.time;
 
+import static org.junit.Assert.*;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import org.apache.commons.lang3.RandomUtils;
+import org.apache.commons.lang3.time.FastDateFormat;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Test;
 
 /**
  * UraDateFormatSpeedTestクラス。<br>
@@ -46,9 +54,9 @@ public class UraDateFormatSpeedTest {
         TimeZone.setDefault(this.defTZ);
         cal.setTimeZone(defTZ);
     }
-/*
+
     @Test
-    public void externalTestFotmatFast() {
+    public void _2externalTestFotmatFast() {
         long ut = 0L;
         String ff = null;
         for (int i = 0; i < 1000000; i++) {
@@ -62,7 +70,7 @@ public class UraDateFormatSpeedTest {
     }
 
     @Test
-    public void externalTestFotmatSimple() {
+    public void _1externalTestFotmatSimple() {
         long ut = 0L;
         String ff = null;
         for (int i = 0; i < 1000000; i++) {
@@ -76,7 +84,7 @@ public class UraDateFormatSpeedTest {
     }
 
     @Test
-    public void externalTestFotmatUra() {
+    public void _3externalTestFotmatUra() {
         long ut = 0L;
         String ff = null;
         for (int i = 0; i < 1000000; i++) {
@@ -92,7 +100,7 @@ public class UraDateFormatSpeedTest {
     }
 
     @Test
-    public void externalTestParseFast() throws ParseException {
+    public void _5externalTestParseFast() throws ParseException {
         int year = 0;
         int month = 0;
         int day = 0;
@@ -109,7 +117,7 @@ public class UraDateFormatSpeedTest {
     }
 
     @Test
-    public void externalTestParseSimple() throws ParseException {
+    public void _4externalTestParseSimple() throws ParseException {
         int year = 0;
         int month = 0;
         int day = 0;
@@ -126,7 +134,7 @@ public class UraDateFormatSpeedTest {
     }
 
     @Test
-    public void externalTestParseUra() throws ParseException {
+    public void _6externalTestParseUra() throws ParseException {
         int year = 0;
         int month = 0;
         int day = 0;
@@ -141,7 +149,7 @@ public class UraDateFormatSpeedTest {
         System.out.println("[" + dt + "]");
         assertEquals(new Date(), dt);
     }
-*/
+
     /**
      * 。<br>
      * @throws java.lang.Exception
