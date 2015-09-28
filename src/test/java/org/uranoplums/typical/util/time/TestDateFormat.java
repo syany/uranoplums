@@ -28,10 +28,8 @@ import java.util.Locale;
  * @author syany
  */
 public class TestDateFormat extends UraDateFormat {
-
     /**  */
-//    private static final long serialVersionUID = 1657494165739636925L;
-
+    private static final long serialVersionUID = 2524757024617282830L;
     /**
      * デフォルトコンストラクタ。<br>
      * @param string
@@ -39,12 +37,6 @@ public class TestDateFormat extends UraDateFormat {
     public TestDateFormat(String string) {
         super(string);
     }
-
-    /*
-     * (非 Javadoc)
-     *
-     * @see org.uranoplums.typical.util.time.UraDateFormat#initialize()
-     */
     @Override
     protected void initialize() {
         super.initialize();
@@ -63,12 +55,6 @@ public class TestDateFormat extends UraDateFormat {
             }
         });
     }
-
-    /*
-     * (非 Javadoc)
-     *
-     * @see org.uranoplums.typical.util.time.UraDateFormat#visitOptionalPattern(java.util.List)
-     */
     @Override
     protected void visitOptionalPattern(List<String> optionalPatternList) {
         // フォーマット許容パターンに、新しいパターン"b"を追加する

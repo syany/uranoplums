@@ -728,8 +728,10 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
      * @param locale
      */
     public UraDateFormat(String formatPattern, Locale locale) {
+
+        String formatPatternLocale = formatPattern + "@@@" + locale.getDisplayName();
         // Copy values of a cached instance if any.
-        SoftReference<UraDateFormat> ref = CACHED_INSTANCES.get(formatPattern);
+        SoftReference<UraDateFormat> ref = CACHED_INSTANCES.get(formatPatternLocale);
         UraDateFormat udf;
         if (ref != null && (udf = ref.get()) != null) {
             copyMembers(udf, this);
@@ -834,19 +836,20 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
      * @return 指定日付書式の文字列 xxx
      */
     protected static UraDateFormat getCachedInstance(String formatPattern, Locale locale) {
-        SoftReference<UraDateFormat> ref = CACHED_INSTANCES.get(formatPattern);
+        String formatPatternLocale = formatPattern + "@@@" + locale.getDisplayName();
+        SoftReference<UraDateFormat> ref = CACHED_INSTANCES.get(formatPatternLocale);
         UraDateFormat dfs = null;
         if (ref == null || (dfs = ref.get()) == null) {
             dfs = new UraDateFormat(formatPattern, locale);
             ref = new SoftReference<UraDateFormat>(dfs);
-            SoftReference<UraDateFormat> x = CACHED_INSTANCES.putIfAbsent(formatPattern, ref);
+            SoftReference<UraDateFormat> x = CACHED_INSTANCES.putIfAbsent(formatPatternLocale, ref);
             if (x != null) {
                 UraDateFormat y = x.get();
                 if (y != null) {
                     dfs = y;
                 } else {
                     // Replace the empty SoftReference with ref.
-                    CACHED_INSTANCES.put(formatPattern, ref);
+                    CACHED_INSTANCES.put(formatPatternLocale, ref);
                 }
             }
         }
@@ -1026,7 +1029,7 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
      * @return 指定日付書式の文字列 xxx
      */
     protected StringBuffer subFormat(UraCalendar calendar, StringBuffer toAppendTo, Locale locale) {
-        for (UraTuple<String, PrinterField> fmt : this.formatPatternList) {
+        for (final UraTuple<String, PrinterField> fmt : this.formatPatternList) {
             toAppendTo.append(fmt.getValue().getFormatField(fmt.getKey(), calendar, locale));
         }
         return toAppendTo;
@@ -1042,7 +1045,7 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
     protected UraCalendar subParse(String source, ParsePosition pos, Locale locale) {
         UraCalendar parsedCalendar = UraCalendarUtils.newUraCalendar();
         parsedCalendar.clear();
-        for (UraTuple<String, ParserField> parser : this.parserPatternList) {
+        for (final UraTuple<String, ParserField> parser : this.parserPatternList) {
             parser.getValue().setParseField(source, parsedCalendar, pos, locale);
         }
         return parsedCalendar;
@@ -1730,7 +1733,7 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
     public String toStringFilter(String... strings) {
         UraToStringBuilder uraToStringBuilder = editUraToStringBuilder(new UraToStringBuilder(
                 this));
-        for (String keyword : strings) {
+        for (final String keyword : strings) {
             uraToStringBuilder.setIncludeFieldNamesPerttern(keyword);
         }
         return uraToStringBuilder.toString();
@@ -2147,7 +2150,7 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
             SortedMap<String, TimeZone> tzNames = getCachedTimeZones(locale);
             if (tzNames.size() == 0) {
                 final String[][] zones = UraDateFormatSymbols.getInstance(locale).getZoneStrings();
-                for (String[] zone : zones) {
+                for (final String[] zone : zones) {
                     if (zone[ID].startsWith("GMT")) {
                         continue;
                     }

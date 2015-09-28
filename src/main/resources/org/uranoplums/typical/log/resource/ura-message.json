@@ -1,0 +1,18 @@
+{
+  URA-T998: "stack trace['{}']",
+  URA-T999: "Unlikely error.",
+  URA-D001: "",
+  URA-I001: "this logs the ['{}'] word.",
+  URA-W001: "",
+  URA-E001: "",
+  URA-E010: "File could not be found. May there is no file.",
+  URA-E011: "File could not be opened. May file is already open.",
+  URA-E012: "File could not be closed. May file is already close.",
+  URA-E013: "The Stream could not be reset. The stream may not correspond.",
+  URA-E014: "File exists but is a directory.",
+  URA-E015: "File cannot be read.",
+  URA-E016: "File cannot be written to.",
+  URA-E017: "File could not be created.",
+  URA-E018: "File is unable to set the last modification time.",
+  URA-E999: "XXX"
+}

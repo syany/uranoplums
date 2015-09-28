@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * @author syany
- * 
+ *
  */
 public class UraEnvUtils extends UraUtils {
 
@@ -23,7 +23,7 @@ public class UraEnvUtils extends UraUtils {
         if (javaVersion == null) {
             return false;
         }
-        for (String v : versionList) {
+        for (final String v : versionList) {
             if (javaVersion.startsWith(v))
                 return true;
         }

@@ -1,21 +1,23 @@
 /*
  * Copyright 2013-2015 the Uranoplums Foundation and the Others.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
- * 
+ *
  * $Id: UraGregorianCalendar.java$
  */
 package org.uranoplums.typical.util.time;
+
+import static org.uranoplums.typical.collection.factory.UraMapFactory.*;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -27,11 +29,9 @@ import java.util.TimeZone;
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.commons.lang3.time.FastDateFormat;
 
-import static org.uranoplums.typical.collection.factory.UraMapFactory.*;
-
 /**
  * UraGregorianCalendarクラス。<br>
- * 
+ *
  * @since 2015/03/30
  * @author syany
  */
@@ -48,6 +48,19 @@ public class UraGregorianCalendar extends GregorianCalendar implements UraCalend
      */
     public UraGregorianCalendar() {
         super();
+    }
+
+    /* (非 Javadoc)
+     * @see java.util.Calendar#setTimeInMillis(long)
+     */
+    @Override
+    public void setTimeInMillis(long paramLong) {
+        super.setTimeInMillis(paramLong);
+//        if (getTimeInMillis() > 0) {
+//            setEra(1);
+//        } else {
+//            setEra(0);
+//        }
     }
 
     /**
@@ -407,7 +420,7 @@ public class UraGregorianCalendar extends GregorianCalendar implements UraCalend
 
     @Override
     public String format(String format) {
-        return UraDateFormat.getInstance(format).format(this.getCalendar());
+        return UraDateFormat.getInstance(format, locale).format(this.getCalendar());
     }
 
     @Override
@@ -417,7 +430,7 @@ public class UraGregorianCalendar extends GregorianCalendar implements UraCalend
 
     /*
      * (非 Javadoc)
-     * 
+     *
      * @see org.uranoplums.typical.util.time.UraCalendar#getAmPmDisplayName(java.util.Locale)
      */
     @Override
@@ -452,7 +465,7 @@ public class UraGregorianCalendar extends GregorianCalendar implements UraCalend
 
     /*
      * (非 Javadoc)
-     * 
+     *
      * @see org.uranoplums.typical.util.time.UraCalendar#getDayOfWeekDisplayName(int, java.util.Locale)
      */
     @Override
@@ -506,7 +519,10 @@ public class UraGregorianCalendar extends GregorianCalendar implements UraCalend
                             result = String.valueOf(sourceYear - targetYear);
                         } else {
                             // 紀元前（BC）の場合の一時対応
-                            result = String.valueOf(this.get(UraCalendar.YEAR));
+                            //result = String.valueOf(this.get(UraCalendar.YEAR));
+                            int targetYear = UraCalendarUtils.getYear(localeDateArray[i]);
+                            int sourceYear = this.get(UraCalendar.YEAR);
+                            result = String.valueOf(sourceYear + targetYear);
                         }
                         break;
                     }
@@ -553,17 +569,17 @@ public class UraGregorianCalendar extends GregorianCalendar implements UraCalend
      * applicable, <code>null</code> is returned. This method calls {@link Calendar#get(int) get(field)} to get the
      * calendar <code>field</code> value if the string representation is
      * applicable to the given calendar <code>field</code>.
-     * 
+     *
      * <p>
      * For example, if this <code>Calendar</code> is a <code>GregorianCalendar</code> and its date is 2005-01-01, then
      * the string representation of the {@link #MONTH} field would be "January" in the long style in an English locale
      * or "Jan" in the short style. However, no string representation would be available for the {@link #DAY_OF_MONTH}
      * field, and this method would return <code>null</code>.
-     * 
+     *
      * <p>
      * The default implementation supports the calendar fields for which a {@link UraDateFormatSymbols} has names in the
      * given <code>locale</code>.
-     * 
+     *
      * @param field
      *            the calendar field for which the string representation
      *            is returned
@@ -607,19 +623,19 @@ public class UraGregorianCalendar extends GregorianCalendar implements UraCalend
      * example, if this <code>Calendar</code> is a {@link GregorianCalendar}, the returned map would contain "Jan" to
      * {@link #JANUARY}, "Feb" to {@link #FEBRUARY}, and so on, in the {@linkplain #SHORT short} style in an English
      * locale.
-     * 
+     *
      * <p>
      * The values of other calendar fields may be taken into account to determine a set of display names. For example,
      * if this <code>Calendar</code> is a lunisolar calendar system and the year value given by the {@link #YEAR} field
      * has a leap month, this method would return month names containing the leap month name, and month names are mapped
      * to their values specific for the year.
-     * 
+     *
      * <p>
      * The default implementation supports display names contained in a {@link UraDateFormatSymbols}. For example, if
      * <code>field</code> is {@link #MONTH} and <code>style</code> is {@link #ALL_STYLES}, this method returns a
      * <code>Map</code> containing all strings returned by {@link UraDateFormatSymbols#getShortMonths()} and
      * {@link UraDateFormatSymbols#getMonths()}.
-     * 
+     *
      * @param field
      *            the calendar field for which the display names are returned
      * @param style
@@ -680,7 +696,7 @@ public class UraGregorianCalendar extends GregorianCalendar implements UraCalend
 
     /*
      * (非 Javadoc)
-     * 
+     *
      * @see org.uranoplums.typical.util.time.UraCalendar#getEraDisplayName(java.util.Locale)
      */
     @Override
@@ -705,7 +721,7 @@ public class UraGregorianCalendar extends GregorianCalendar implements UraCalend
 
     /*
      * (非 Javadoc)
-     * 
+     *
      * @see org.uranoplums.typical.util.time.UraCalendar#getLocaleEraDisplayName(java.util.Locale)
      */
     @Override
@@ -715,7 +731,7 @@ public class UraGregorianCalendar extends GregorianCalendar implements UraCalend
 
     /*
      * (非 Javadoc)
-     * 
+     *
      * @see org.uranoplums.typical.util.time.UraCalendar#getLocaleYearDisplayName(java.util.Locale)
      */
     @Override
@@ -745,7 +761,7 @@ public class UraGregorianCalendar extends GregorianCalendar implements UraCalend
 
     /*
      * (非 Javadoc)
-     * 
+     *
      * @see org.uranoplums.typical.util.time.UraCalendar#getMonthDisplayName(int, java.util.Locale)
      */
     @Override
@@ -927,7 +943,7 @@ public class UraGregorianCalendar extends GregorianCalendar implements UraCalend
 
     /*
      * (非 Javadoc)
-     * 
+     *
      * @see java.util.Calendar#set(int, int)
      */
     @Override

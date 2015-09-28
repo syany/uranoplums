@@ -62,6 +62,7 @@ artifacts {
 jar {
     manifest {
         attributes 'Implementation-Title': 'uranoplums Project',
+                'Implementation-Vendor': 'uranoplums.org',
                    'Implementation-Version': version
     }
 }

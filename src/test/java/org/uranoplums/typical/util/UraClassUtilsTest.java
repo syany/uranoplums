@@ -37,6 +37,12 @@ public class UraClassUtilsTest {
     @Before
     public void setUp() throws Exception {}
 
+    @Test
+    public final void testGetInstance() {
+        UraClassUtils cu = new UraClassUtils();
+        assertTrue(true);
+    }
+
     /**
      * {@link org.uranoplums.typical.util.UraClassUtils#getCurrentClassLoader(java.lang.Class)} のためのテスト・メソッド。
      */

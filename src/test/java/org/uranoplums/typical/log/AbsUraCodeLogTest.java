@@ -179,7 +179,7 @@ class CodeMessageLog extends AbsUraCodeLog<String> {
         super(logger);
     }
 
-    private UraJSONResource messageResource = new UraJSONResource("message");
+    private UraJSONResource messageResource = new UraJSONResource("code_message");
 
     /* (非 Javadoc)
      * @see org.uranoplums.typical.log.UraCodeLevelJudge#toLevel(java.lang.Object, ch.qos.logback.classic.Level)

@@ -1,18 +1,18 @@
 /*
  * Copyright 2013-2015 the Uranoplums Foundation and the Others.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
- * 
+ *
  * $Id: UraClassUtils.java$
  */
 package org.uranoplums.typical.util;
@@ -29,7 +29,7 @@ import org.uranoplums.typical.log.UraLoggerFactory;
 
 /**
  * UraClassUtilsクラス。<br>
- * 
+ *
  * @since 2015/04/09
  * @author syany
  */
@@ -120,7 +120,7 @@ public class UraClassUtils extends UraUtils {
     @SuppressWarnings ("hiding")
     public static final <S, T> boolean hasInterface(Class<S> source, Class<T> target) {
         Class<?>[] intarfaceArray = source.getInterfaces();
-        for (Class<?> klass : intarfaceArray) {
+        for (final Class<?> klass : intarfaceArray) {
             if (hasInterface(klass, target)) {
                 return true;
             }

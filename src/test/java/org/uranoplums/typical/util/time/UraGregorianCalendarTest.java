@@ -29,6 +29,7 @@ import java.util.Map;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.uranoplums.typical.util.i18n.UraLocale;
 
 /**
  * UraGregorianCalendarTestクラス。<br>
@@ -220,22 +221,96 @@ public class UraGregorianCalendarTest {
         System.out.println("今年の300年前は西暦" + cal.getYear() + "年で、和暦は" + localeEra + localeYear + "年です。");
         System.out.println();
         // 国別に出力したい場合
-        cal = UraCalendarUtils.newUraCalendar(2001, 5, 15);
+        cal = UraCalendarUtils.newUraCalendar(2015, 5, 15);
         // テスト的に日本、米国、イタリア、タイのロケールを設定
         List<Locale> localeList = newArrayList();
-        localeList.add(Locale.JAPAN);
-        localeList.add(Locale.US);
-        localeList.add(Locale.ITALY);
-        localeList.add(new Locale("th", "TH"));
+        localeList.add(UraLocale.japanese());
+        localeList.add(UraLocale.US);
+        localeList.add(UraLocale.italian("IT"));
+        localeList.add(UraLocale.thai());
         // ロケール別出力
         System.out.println("newUraCalendar(2001, 5, 15)");
-        for(Locale loc: localeList) {
+        for (Locale loc : localeList) {
             String locName = loc.getDisplayName();
             String month = cal.getMonthDisplayName(UraCalendar.SHORT, loc);
             String dayOfWeek = cal.getDayOfWeekDisplayName(UraCalendar.SHORT, loc);
-            System.out.println(" [" + cal.getYear() + "-"+ month + "-" + cal.getDayOfMonth() + "(" + dayOfWeek + ")] 国(" + locName + ")の場合");
+            String localeEra2 = cal.getLocaleEraDisplayName(loc);
+            String localeYear2 = cal.getLocaleYearDisplayName(loc);
+            System.out.println(" [" + cal.getYear() + "-" + month + "-" + cal.getDayOfMonth() + "(" + dayOfWeek + ")][" + localeEra2 + localeYear2
+                    + "] 国(" + locName + ")の場合");
         }
+        assertTrue(true);
+    }
 
+    @Test
+    public void testBuddhistCalendar02() {
+        UraCalendar cal = UraCalendarUtils.newUraCalendar();
+        cal.setNow();
+        cal.addYear(-2015);
+        Locale buddhistLocale = UraLocale.thai("TH");
+        Calendar bCal = Calendar.getInstance(buddhistLocale);
+        bCal.setTime(cal.getTime());
+        System.out.println("西暦:[" + cal.getYear() + "], 仏暦:[" + bCal.getDisplayName(Calendar.ERA, Calendar.SHORT, buddhistLocale)
+                + bCal.get(Calendar.YEAR) + "]はローカル暦では[" + cal.getLocaleEraDisplayName(buddhistLocale) + cal.getLocaleYearDisplayName(buddhistLocale)
+                + "]です");
+    }
+
+    @Test
+    public void testBuddhistCalendar() {
+        UraCalendar cal = UraCalendarUtils.newUraCalendar(1, 0, 1);
+        cal.clear();
+        cal.set(1, 0, 1);
+        // cal.addYear(-543);
+        // System.out.println("0[" + cal.getYear() + "-" + cal.getMonthDisplayName(UraCalendar.SHORT, Locale.JAPAN) +
+        // "]");
+        // cal.setTimeInMillis(-39140787600000L);//-79303136400000
+        cal.setTimeInMillis(-79303136400000L);
+        System.out.println("c[" + cal.getEraDisplayName(Locale.UK) + "], y[" + cal.getYear() + "],[" + cal.getTimeInMillis() + "]@" + cal.toString());
+        Calendar gCal = Calendar.getInstance();
+        gCal.clear();
+        gCal.set(1, 0, 1);
+        String gEra = gCal.getDisplayName(Calendar.ERA, Calendar.LONG, Locale.UK);
+        int gYear = gCal.get(Calendar.YEAR);
+        System.out.println("c[" + gEra + "], y[" + gYear + "]");
+        // gCal.add(Calendar.YEAR, -543);
+        // gCal.setTimeInMillis(-39140787600000L);
+        gCal.setTimeInMillis(-79303136400000L);
+        gEra = gCal.getDisplayName(Calendar.ERA, Calendar.LONG, Locale.UK);
+        gYear = gCal.get(Calendar.YEAR);
+        System.out.println("c[" + gEra + "], y[" + gYear + "],[" + gCal.getTimeInMillis() + "]@" + gCal.toString());
+        Locale buddhistLocale = UraLocale.thai("TH");
+        Calendar bCal = Calendar.getInstance(buddhistLocale);
+        String era = bCal.getDisplayName(Calendar.ERA, Calendar.LONG, buddhistLocale);
+        int year = bCal.get(Calendar.YEAR);
+        System.out.println("now[" + era + " " + year + "]");
+        assertTrue(true);
+    }
+
+    @Test
+    public void testCalendarPattern03() {
+        UraCalendar cal = UraCalendarUtils.newUraCalendar(0L);
+        UraDateFormat udf = UraDateFormat.getInstance("yyyy-MM-dd aKK:mm:ss.SSS(EE)");
+        System.out.println("変更前:" + udf.format(cal));
+        // 編集
+        cal.addMilliseconds(555);
+        cal.setHoursOfDay(15).setDay(18);
+        System.out.println("変更中:" + udf.format(cal));
+        cal.rollMinutes(62).rollHoursOfDay(14);
+        // cal.rollMinutes(62).rollHours(14); // <-- これは、AM/PM変わらない
+        cal.setStrictMilliseconds(10137).setStrictDayOfWeek(0);
+        System.out.println("変更中:" + udf.format(cal));
+        cal.trancateDay().addMonth(-13);
+        System.out.println("変更後:" + udf.format(cal));
+        assertTrue(true);
+    }
+
+    @Test
+    public void testCalendarPattern04() {
+        UraCalendar cal = UraCalendarUtils.newUraCalendar(0L);
+
+        UraCalendar calb = UraCalendarUtils.newUraCalendar(0L);
+
+        cal.compareDate(calb.getCalendar());
         assertTrue(true);
     }
 }

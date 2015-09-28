@@ -515,8 +515,9 @@ public class UraDateFormatTest {
     public void testexternalPattern() {
         TestDateFormat ldf = new TestDateFormat("b");
         cal.setMonth(6);
-        String target = ldf.format(cal);
-        assertEquals("6", target);
+        String targetFmt = ldf.format(cal);
+        System.out.println("現在[" + targetFmt + "]です。");
+        assertEquals("6", targetFmt);
     }
 
     @Test

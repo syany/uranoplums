@@ -241,7 +241,7 @@ public abstract class AbsUraHierarchyResource extends AbsUraResource<Object> {
             @SuppressWarnings ("unchecked")
             Map<String, Object> orgSource =(Map<String, Object>)source;
             Map<String, Object> newSource = newHashMap(orgSource.size());
-            for (Map.Entry<String, Object> entry: orgSource.entrySet()) {
+            for (final Map.Entry<String, Object> entry: orgSource.entrySet()) {
                 Object value = getSubResourceValue(locale, entry.getValue());
                 newSource.put(entry.getKey(), value);
             }
@@ -251,7 +251,7 @@ public abstract class AbsUraHierarchyResource extends AbsUraResource<Object> {
             @SuppressWarnings ("unchecked")
             List<Object> orgSource = (List<Object>)source;
             List<Object> newSource = newArrayList(orgSource.size());
-            for (Object value: orgSource) {
+            for (final Object value: orgSource) {
                 newSource.add(getSubResourceValue(locale, value));
             }
             source = newSource;

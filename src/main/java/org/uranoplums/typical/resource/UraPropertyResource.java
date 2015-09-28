@@ -136,7 +136,7 @@ public class UraPropertyResource extends AbsUraStringResource {
             return;
         }
         // synchronized (resources) {
-        for (String key : props.stringPropertyNames()) {
+        for (final String key : props.stringPropertyNames()) {
             logger.trace("  Saving message key '" + valueKey(localeKey, key));
             resources.put(valueKey(localeKey, key), props.getProperty(key));
         }

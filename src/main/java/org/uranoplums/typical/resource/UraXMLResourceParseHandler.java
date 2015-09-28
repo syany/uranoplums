@@ -1,21 +1,24 @@
 /*
  * Copyright 2013-2015 the Uranoplums Foundation and the Others.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
- * 
+ *
  * $Id: UraXMLResourceParseHandler.java$
  */
 package org.uranoplums.typical.resource;
+
+import static org.uranoplums.typical.collection.factory.UraListFactory.*;
+import static org.uranoplums.typical.collection.factory.UraMapFactory.*;
 
 import java.util.Collection;
 import java.util.Deque;
@@ -28,6 +31,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.uranoplums.typical.collection.UraTuple;
+import org.uranoplums.typical.collection.factory.UraMapFactory.FACTOR;
 import org.uranoplums.typical.exception.UraSystemRuntimeException;
 import org.uranoplums.typical.lang.UraObject;
 import org.uranoplums.typical.lang.UraObjectCommoner;
@@ -40,14 +44,9 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import org.uranoplums.typical.collection.factory.UraMapFactory.FACTOR;
-
-import static org.uranoplums.typical.collection.factory.UraListFactory.*;
-import static org.uranoplums.typical.collection.factory.UraMapFactory.*;
-
 /**
  * UraSAXParse2Mapクラス。<br>
- * 
+ *
  * @since 2015/06/11
  * @author syany
  */
@@ -152,7 +151,7 @@ public class UraXMLResourceParseHandler extends DefaultHandler implements UraObj
 
     /**
      * Uranoplums向けStringToBuilderオブジェクトを返却します。<br>
-     * 
+     *
      * @param uraToStringBuilder
      * @return UraToStringBuilder
      */
@@ -364,7 +363,7 @@ public class UraXMLResourceParseHandler extends DefaultHandler implements UraObj
 
     /*
      * (非 Javadoc)
-     * 
+     *
      * @see org.xml.sax.helpers.DefaultHandler#characters(char[], int, int)
      */
     @SuppressWarnings ("unchecked")
@@ -411,7 +410,7 @@ public class UraXMLResourceParseHandler extends DefaultHandler implements UraObj
 
     /**
      * このオブジェクトのクローン(Shallow copy)を作成し、返却します。
-     * 
+     *
      * @return シャローコピーをした自オブジェクト
      * @see java.lang.Object#clone()
      */
@@ -427,7 +426,7 @@ public class UraXMLResourceParseHandler extends DefaultHandler implements UraObj
 
     /*
      * (非 Javadoc)
-     * 
+     *
      * @see org.xml.sax.helpers.DefaultHandler#endDocument()
      */
     @Override
@@ -438,7 +437,7 @@ public class UraXMLResourceParseHandler extends DefaultHandler implements UraObj
 
     /*
      * (非 Javadoc)
-     * 
+     *
      * @see org.xml.sax.helpers.DefaultHandler#endElement(java.lang.String, java.lang.String, java.lang.String)
      */
     @Override
@@ -451,7 +450,7 @@ public class UraXMLResourceParseHandler extends DefaultHandler implements UraObj
     /**
      * 本オブジェクトと引数オブジェクトが等しいか判定します。<br>
      * 比較には#hashCodeを利用します。
-     * 
+     *
      * @return (等価：true/不等価：false)
      * @see java.lang.Object#equals(java.lang.Object)
      */
@@ -469,7 +468,7 @@ public class UraXMLResourceParseHandler extends DefaultHandler implements UraObj
 
     /**
      * 本オブジェクトのjハッシュ値を返却します。
-     * 
+     *
      * @return ハッシュコード(Jakarta Common Lang HashCodeBuilderを使用)
      * @see java.lang.Object#hashCode()
      */
@@ -487,7 +486,7 @@ public class UraXMLResourceParseHandler extends DefaultHandler implements UraObj
 
     /*
      * (非 Javadoc)
-     * 
+     *
      * @see org.xml.sax.helpers.DefaultHandler#startDocument()
      */
     @Override
@@ -503,7 +502,7 @@ public class UraXMLResourceParseHandler extends DefaultHandler implements UraObj
 
     /*
      * (非 Javadoc)
-     * 
+     *
      * @see org.xml.sax.helpers.DefaultHandler#startElement(java.lang.String, java.lang.String, java.lang.String,
      * org.xml.sax.Attributes)
      */
@@ -520,7 +519,7 @@ public class UraXMLResourceParseHandler extends DefaultHandler implements UraObj
     /**
      * 本オブジェクト内容を読みやすい形で文字列で返却します。<br>
      * 複数フィールドを内包している場合、再帰的に対象オブジェクトのtoStringを呼び出します。
-     * 
+     *
      * @return 本オブジェクトフィールド内容の文字列（改行付）
      */
     public String toMultiString() {
@@ -537,7 +536,7 @@ public class UraXMLResourceParseHandler extends DefaultHandler implements UraObj
     /**
      * 本オブジェクト内容を読みやすい形で文字列で返却します。<br>
      * 引数の変数名リストにあるパターンのみ出力します。
-     * 
+     *
      * @param strings 出力対象変数名パターン
      * @return 本オブジェクトフィールド内容の文字列（改行付）
      */
@@ -556,7 +555,7 @@ public class UraXMLResourceParseHandler extends DefaultHandler implements UraObj
     /**
      * 本オブジェクト内容を文字列で返却します。<br>
      * 複数フィールドを内包している場合、再帰的に対象オブジェクトのtoStringを呼び出します。
-     * 
+     *
      * @return 本オブジェクトフィールド内容の文字列
      * @see java.lang.Object#toString()
      */
@@ -568,14 +567,14 @@ public class UraXMLResourceParseHandler extends DefaultHandler implements UraObj
     /**
      * 本オブジェクト内容を文字列で返却します。<br>
      * 引数の変数名リストにあるパターンのみ出力します。
-     * 
+     *
      * @param strings 出力対象変数名パターン
      * @return 本オブジェクトフィールド内容の文字列
      */
     public String toStringFilter(String... strings) {
         UraToStringBuilder uraToStringBuilder = editUraToStringBuilder(new UraToStringBuilder(
                 this));
-        for (String keyword : strings) {
+        for (final String keyword : strings) {
             uraToStringBuilder.setIncludeFieldNamesPerttern(keyword);
         }
         return uraToStringBuilder.toString();

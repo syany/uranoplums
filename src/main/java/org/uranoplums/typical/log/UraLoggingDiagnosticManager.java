@@ -123,7 +123,7 @@ public class UraLoggingDiagnosticManager extends UraObject {
     // public Set<Entry<String, Object>> entrySet() {
     // Set<Entry<String, Object>> resultSet = new HashSet<Entry<String, Object>>(3);
     // MDC.
-    // for (Object obj : MDC.getContext().entrySet()) {
+    // for (final Object obj : MDC.getContext().entrySet()) {
     // resultSet.add((Entry<String, Object>) obj);
     // }
     // return resultSet;
@@ -214,7 +214,7 @@ public class UraLoggingDiagnosticManager extends UraObject {
      */
     public int removeAll() {
         int result = this.size();
-        for (String key : MDC_KEY_LIST) {
+        for (final String key : MDC_KEY_LIST) {
             MDC.remove(key);
         }
         MDC_KEY_LIST.clear();
