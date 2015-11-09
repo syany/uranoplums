@@ -14,5 +14,8 @@
   URA-E016: "File cannot be written to.",
   URA-E017: "File could not be created.",
   URA-E018: "File is unable to set the last modification time.",
+  URA-E019: "The file path is invalid.",//
+  URA-E020: "File does not exist: {}.",
+  URA-E021: "Unable to delete file: {}.",
   URA-E999: "XXX"
 }

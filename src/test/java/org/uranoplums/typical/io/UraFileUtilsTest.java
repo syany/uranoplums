@@ -67,7 +67,7 @@ public class UraFileUtilsTest {
     public void tearDown() throws Exception {}
 
     /**
-     * {@link org.uranoplums.typical.io.UraFileUtils#getCanonicalFile(java.lang.String, java.util.HashSet)} のためのテスト・メソッド。
+     * {@link org.uranoplums.typical.io.UraRWUtils#getCanonicalFile(java.lang.String, java.util.HashSet)} のためのテスト・メソッド。
      */
     @Test
     public final void testGetCanonicalFileStringCharsetHashSetOfString() {
@@ -75,15 +75,30 @@ public class UraFileUtilsTest {
 
         fail("まだ実装されていません"); // TODO
     }
+
+    @Test
+    public final void testFileCharRead() throws IOException {
+        File f = new File(".\\bin\\charset_test.txt");
+        UraRWUtils.openReadChar(f, new AbsUraFileCharRead() {
+            @Override
+            public void readCharArray(char[] buffer, String path, int size, long lnum) {
+                String line = new String(buffer);
+                System.out.println("P["+path+"] D:" + line);
+            }
+        }, null);
+
+        fail("まだ実装されていません"); // TODO
+    }
+
     @Test
     public final void testFileRead() throws IOException {
         File f = new File(".\\bin\\charset_test.txt");
-        UraFileUtils.openReadLine(f, null, new UraFileReader() {
+        UraRWUtils.openReadLine(f, new UraFileLineReader() {
             @Override
-            public void readLine(String line, String path) {
+            public void readLine(String line, String path,long l) {
                 System.out.println("P["+path+"] D:" + line);
             }
-        });
+        }, null);
 
         fail("まだ実装されていません"); // TODO
     }
@@ -91,9 +106,9 @@ public class UraFileUtilsTest {
     @Test
     public final void testFileReadEuc() throws IOException {
         File f = new File(".\\bin\\charset_test_euc.txt");
-        UraFileUtils.openReadLine(f, new UraFileReader() {
+        UraRWUtils.openReadLine(f, new UraFileLineReader() {
             @Override
-            public void readLine(String line, String path) {
+            public void readLine(String line, String path, long l) {
                 System.out.println("P["+path+"] D:" + line);
             }
         });
@@ -108,7 +123,7 @@ public class UraFileUtilsTest {
     }
 
     /**
-     * {@link org.uranoplums.typical.io.UraFileUtils#getCanonicalFile(java.io.File, java.util.HashSet)} のためのテスト・メソッド。
+     * {@link org.uranoplums.typical.io.UraRWUtils#getCanonicalFile(java.io.File, java.util.HashSet)} のためのテスト・メソッド。
      */
     @Test
     public final void testGetCanonicalFileFileCharsetHashSetOfString() {

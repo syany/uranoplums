@@ -17,17 +17,11 @@
  */
 package org.uranoplums.typical.io;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.Reader;
-import java.nio.charset.Charset;
+import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -36,191 +30,44 @@ import org.uranoplums.typical.exception.UraIORuntimeException;
 import org.uranoplums.typical.log.UraLogger;
 import org.uranoplums.typical.log.UraLoggerFactory;
 import org.uranoplums.typical.util.UraUtils;
-import org.uranoplums.typical.util.i18n.UraCharset;
+
 
 /**
  * UraFileUtilsクラス。<br>
  *
- * @since 2015/10/31
+ * @since 2015/11/11
  * @author syany
  */
 public class UraFileUtils extends UraUtils {
 
+    public static final long ONE_KB = 1024L;
+    public static final long ONE_MB = 1048576L;
+    public static final long ONE_GB = 1073741824L;
+    public static final File[] EMPTY_FILE_ARRAY = new File[0];
     /**  */
-    private static final String DUMMY_HOME = "dummy.org";
+    protected static final UraLogger<String> LOGGER;
     /**  */
-    protected static final UraLogger<String> LOGGER = new UraInnerCodeLog(UraLoggerFactory.getLogger());
+    protected static final Set<String> validPathSet;
 
-    public static final void openReadLine(File path, UraFileReader fileReader) throws IOException {
-        openReadLine(path, null, fileReader);
-    }
-
-    public static final void openReadLine(File path, Charset charset, UraFileReader fileReader) throws IOException {
-        InputStream inputStream = null;
-        Reader reader = null;
-        BufferedReader bufferedReader = null;
+    static {
+        LOGGER = new UraInnerCodeLog(UraLoggerFactory.getLogger());
+        validPathSet = new HashSet<String>(4);
         try {
-            inputStream = openInputStream(path);
-            if (charset == null) {
-                charset = UraCharset.ME.getCharset(path);
-                if (charset == null) {
-                    charset = Charset.defaultCharset();
-                }
-            }
-            //
-            reader = new InputStreamReader(inputStream, charset);
-            bufferedReader = getResetableReader(reader);
-            String lineStr;
-            while((lineStr = bufferedReader.readLine()) != null){
-                fileReader.readLine(lineStr, path.getPath());
-            }
-        } finally {
-            UraIOUtils.closeQuietly(bufferedReader);
-            UraIOUtils.closeQuietly(reader);
-            UraIOUtils.closeQuietly(inputStream);
-        }
-    }
-    public static FileInputStream openInputStream(File file)
-            throws IOException
-    {
-        if (file.exists()) {
-            if (file.isDirectory()) {
-                IOException ioe = new IOException();
-                LOGGER.log("URA-E014", ioe);
-                throw ioe;
-            }
-            if (!file.canRead()) {
-                IOException ioe = new IOException();
-                LOGGER.log("URA-E015", ioe);
-                throw ioe;
-            }
-        } else {
-            FileNotFoundException fnfe = new FileNotFoundException();
-            LOGGER.log("URA-E010", fnfe);
-            throw fnfe;
-        }
-        return new FileInputStream(file);
-    }
-
-    public static FileOutputStream openOutputStream(File file)
-            throws IOException
-    {
-        if (file.exists()) {
-            if (file.isDirectory()) {
-                IOException ioe = new IOException();
-                LOGGER.log("URA-E014", ioe);
-                throw ioe;
-            }
-            if (!file.canWrite()) {
-                IOException ioe = new IOException();
-                LOGGER.log("URA-E016", ioe);
-                throw ioe;
-            }
-        } else {
-            File parent = file.getParentFile();
-            if ((parent != null) && (!parent.exists()) &&
-                    (!parent.mkdirs())) {
-                IOException ioe = new IOException();
-                LOGGER.log("URA-E017", ioe);
-                throw ioe;
-            }
-        }
-        return new FileOutputStream(file);
-    }
-
-
-    @SuppressWarnings ("unchecked")
-    public static final <E extends Reader> E getResetableReaderIfNot(Reader reader, int paramInt, E... dummy) {
-        if (reader.markSupported()) {
-            try {
-                reader.mark(0);
-                return (E) reader;
-            } catch (IOException e) {
-                // Unlikely
-                LOGGER.log("URA-T999", e);
-            }
-        }
-        return getResetableReader(reader, paramInt, dummy);
-    }
-
-    @SuppressWarnings ("unchecked")
-    public static final <E extends Reader> E getResetableReader(Reader reader, int paramInt, E... dummy) {
-        Reader r = new BufferedReader(reader);
-        try {
-            if (r.markSupported()) {
-                r.mark(0);
-            }
+            validPathSet.add(new File("dummy.org").getCanonicalFile().getParent());
         } catch (IOException e) {
-            // Unlikely
-            LOGGER.log("URA-T999", e);
-        }
-        return (E) r;
-    }
-    @SuppressWarnings ("unchecked")
-    public static final <E extends Reader> E getResetableReaderIfNot(Reader reader, E... dummy) {
-        if (reader.markSupported()) {
-            try {
-                reader.mark(0);
-                return (E) reader;
-            } catch (IOException e) {
-                // Unlikely
-                LOGGER.log("URA-T999", e);
-            }
-        }
-        return getResetableReader(reader, dummy);
-    }
-
-    @SuppressWarnings ("unchecked")
-    public static final <E extends Reader> E getResetableReader(Reader reader, E... dummy) {
-        Reader r = new BufferedReader(reader);
-        try {
-            if (r.markSupported()) {
-                r.mark(0);
-            }
-        } catch (IOException e) {
-            // Unlikely
-            LOGGER.log("URA-T999", e);
-        }
-        return (E) r;
-    }
-
-    public static String byteCountToDisplaySize(long size)
-    {
-        String displaySize;
-//        String displaySize;
-        if (size / 1073741824L > 0L) {
-            displaySize = String.valueOf(size / 1073741824L) + " GB";
-        } else {
-//            String displaySize;
-            if (size / 1048576L > 0L) {
-                displaySize = String.valueOf(size / 1048576L) + " MB";
-            } else {
-//                String displaySize;
-                if (size / 1024L > 0L) {
-                    displaySize = String.valueOf(size / 1024L) + " KB";
-                } else {
-                    displaySize = String.valueOf(size) + " bytes";
-                }
-            }
-        }
-        return displaySize;
-    }
-
-    public static void touch(File file)
-            throws IOException
-    {
-        if (!file.exists()) {
-            OutputStream out = openOutputStream(file);
-            UraIOUtils.closeQuietly(out);
-        }
-        boolean success = file.setLastModified(System.currentTimeMillis());
-        if (!success) {
-            IOException ioe = new IOException();
-            LOGGER.log("URA-E018", ioe);
-            throw ioe;
+            e.printStackTrace();
         }
     }
 
+    public static final void setDefaultValidPath(String path) {
+        validPathSet.add(path);
+    }
+    public static final void removeDefaultValidPath(String path) {
+        validPathSet.remove(path);
+    }
+    public static final void clearDefaultValidPath() {
+        validPathSet.clear();
+    }
     /**
      * 。<br>
      * @param path
@@ -253,25 +100,109 @@ public class UraFileUtils extends UraUtils {
     /**
      * 。<br>
      * @param cononicalFile
+     * @return
+     */
+    public static File getCanonicalFile(File cononicalFile) {
+        return getCanonicalFile(cononicalFile, null);
+    }
+    /**
+     * 。<br>
+     * @param cononicalFile
      * @param includePaths
      * @return
      */
     public static File getCanonicalFile(File cononicalFile, Set<String> includePaths) {
-        if (includePaths == null) {
-            includePaths = new HashSet<String>(4);
+        if (includePaths != null) {
+            validPathSet.addAll(includePaths);
         }
         try {
             //
-            includePaths.add(new File(DUMMY_HOME).getCanonicalFile().getParent());
-            //
             String cononicalDir = cononicalFile.getCanonicalFile().getParent();
-            if (!includePaths.contains(cononicalDir)) {
+            if (!validPathSet.contains(cononicalDir)) {
                 throw new UraIORuntimeException();
             }
             return cononicalFile.getCanonicalFile();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new UraIORuntimeException(e);
         }
-        return null;
     }
+
+    /**
+     * 。<br>
+     * @param size
+     * @return
+     */
+    public static String byteCountToDisplaySize(long size)
+    {
+        String displaySize;
+        if (size / 1073741824L > 0L) {
+            displaySize = String.valueOf(size / 1073741824L) + " GB";
+        } else {
+            if (size / 1048576L > 0L) {
+                displaySize = String.valueOf(size / 1048576L) + " MB";
+            } else {
+                if (size / 1024L > 0L) {
+                    displaySize = String.valueOf(size / 1024L) + " KB";
+                } else {
+                    displaySize = String.valueOf(size) + " bytes";
+                }
+            }
+        }
+        return displaySize;
+    }
+    /**
+     * 。<br>
+     * @param file
+     * @throws IOException
+     */
+    public static void touch(File file) {
+        if (!file.exists()) {
+            OutputStream out;
+            try {
+                out = UraIOUtils.openOutputStream(file);
+            } catch (IOException e) {
+                UraIORuntimeException ioe = new UraIORuntimeException(e);
+                LOGGER.log("URA-E018", ioe);
+                throw ioe;
+            }
+            UraIOUtils.closeQuietly(out);
+        }
+        boolean success = file.setLastModified(System.currentTimeMillis());
+        if (!success) {
+            UraIORuntimeException ioe = new UraIORuntimeException();
+            LOGGER.log("URA-E018", ioe);
+            throw ioe;
+        }
+    }
+
+
+    public static File toFile(URL url) {
+        if ((url == null) || (!url.getProtocol().equals("file"))) {
+            return null;
+        }
+        String filename = url.getFile().replace('/', File.separatorChar);
+        int pos = 0;
+        while ((pos = filename.indexOf('%', pos)) >= 0) {
+            if (pos + 2 < filename.length())
+            {
+                String hexStr = filename.substring(pos + 1, pos + 3);
+                char ch = (char) Integer.parseInt(hexStr, 16);
+                filename = filename.substring(0, pos) + ch + filename.substring(pos + 3);
+            }
+        }
+        return new File(filename);
+    }
+
+    public static void forceDelete(File file) throws IOException {
+        if (!file.exists()) {
+            LOGGER.log("URA-E020", file);
+            throw new FileNotFoundException("File does not exist: " + file);
+        }
+        if (!file.delete()) {
+            LOGGER.log("URA-E021", file);
+            String message = "Unable to delete file: " + file;
+            throw new IOException(message);
+        }
+    }
+
 }

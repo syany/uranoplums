@@ -17,21 +17,17 @@
  */
 package org.uranoplums.typical.io;
 
-import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.io.Reader;
-import java.io.StringWriter;
 import java.io.Writer;
-import java.util.ArrayList;
-import java.util.List;
 
+import org.uranoplums.typical.exception.UraIORuntimeException;
 import org.uranoplums.typical.log.UraLogger;
 import org.uranoplums.typical.log.UraLoggerFactory;
 import org.uranoplums.typical.util.UraClassUtils;
@@ -45,37 +41,20 @@ import org.uranoplums.typical.util.UraUtils;
  * @author syany
  */
 public class UraIOUtils extends UraUtils {
+
     /**  */
-    public static final char DIR_SEPARATOR_UNIX = '/';
-    /**  */
-    public static final char DIR_SEPARATOR_WINDOWS = '\\';
-    /**  */
-    public static final char DIR_SEPARATOR = File.separatorChar;
-    /**  */
-    public static final String LINE_SEPARATOR_UNIX = "\n";
-    /**  */
-    public static final String LINE_SEPARATOR_WINDOWS = "\r\n";
-    /**  */
-    public static final String LINE_SEPARATOR;
+    public static final String DUMMY_FILE = "dmf";
 
     //protected static final UraLogger LOGGER = UraLoggerFactory.getLogger();
 
     protected static final UraLogger<String> LOGGER = new UraInnerCodeLog(UraLoggerFactory.getLogger());
 
-    static {
-        StringWriter buf = new StringWriter(4);
-        PrintWriter out = new PrintWriter(buf);
-        out.println();
-        LINE_SEPARATOR = buf.toString();
-    }
     /**
      * 。<br>
      * @param input
      */
-    public static void closeQuietly(Reader input)
-    {
-        try
-        {
+    public static void closeQuietly(InputStream input) {
+        try {
             if (input != null) {
                 input.close();
             }
@@ -88,42 +67,8 @@ public class UraIOUtils extends UraUtils {
      * 。<br>
      * @param output
      */
-    public static void closeQuietly(Writer output)
-    {
-        try
-        {
-            if (output != null) {
-                output.close();
-            }
-        } catch (IOException ioe) {
-            LOGGER.log("URA-E012", ioe);
-        }
-    }
-
-    /**
-     * 。<br>
-     * @param input
-     */
-    public static void closeQuietly(InputStream input)
-    {
-        try
-        {
-            if (input != null) {
-                input.close();
-            }
-        } catch (IOException ioe) {
-            LOGGER.log("URA-E012", ioe);
-        }
-    }
-
-    /**
-     * 。<br>
-     * @param output
-     */
-    public static void closeQuietly(OutputStream output)
-    {
-        try
-        {
+    public static void closeQuietly(OutputStream output) {
+        try {
             if (output != null) {
                 output.close();
             }
@@ -173,16 +118,26 @@ public class UraIOUtils extends UraUtils {
         return is;
     }
 
-    public static InputStream newInputStream(String pathStr) {
+    public static InputStream openInputStreamQuietly(String pathStr) {
         ClassLoader classLoader = UraClassUtils.getCurrentClassLoader();
         InputStream is = classLoader.getResourceAsStream(pathStr);
         if (is == null) {
-            try {
-                is = new FileInputStream(pathStr);
-            } catch (FileNotFoundException e) {
-                LOGGER.log("URA-E010", e);
-                UraIOUtils.closeQuietly(is);
-            }
+            is =openInputStreamQuietly(new File(pathStr));
+        }
+        return is;
+    }
+    public static InputStream openInputStreamQuietly(File file) {
+        InputStream is = null;
+        try {
+            File canonicalFile = UraFileUtils.getCanonicalFile(file);
+            is = openInputStream(canonicalFile);
+        } catch (UraIORuntimeException ioe) {
+            LOGGER.log("URA-E019", ioe);
+            ClassLoader classLoader = UraClassUtils.getCurrentClassLoader();
+            is = classLoader.getResourceAsStream(DUMMY_FILE);
+        } catch (Exception e) {
+            ClassLoader classLoader = UraClassUtils.getCurrentClassLoader();
+            is = classLoader.getResourceAsStream(DUMMY_FILE);
         }
         return is;
     }
@@ -212,10 +167,9 @@ public class UraIOUtils extends UraUtils {
         is.mark(0);
         return is;
     }
-    public static void resetQuietly(InputStream input)
-    {
-        try
-        {
+
+    public static void resetQuietly(InputStream input) {
+        try {
             if (input != null) {
                 input.reset();
             }
@@ -224,51 +178,191 @@ public class UraIOUtils extends UraUtils {
         }
     }
 
-    public static void resetQuietly(Reader input)
-    {
-        try
-        {
-            if (input != null) {
-                input.reset();
+    public static FileInputStream openInputStream(File file)
+            throws IOException {
+        if (file.exists()) {
+            if (file.isDirectory()) {
+                IOException ioe = new IOException();
+                LOGGER.log("URA-E014", ioe);
+                throw ioe;
             }
-        } catch (IOException ioe) {
-            LOGGER.log("URA-E013", ioe);
+            if (!file.canRead()) {
+                IOException ioe = new IOException();
+                LOGGER.log("URA-E015", ioe);
+                throw ioe;
+            }
+        } else {
+            FileNotFoundException fnfe = new FileNotFoundException();
+            LOGGER.log("URA-E010", fnfe);
+            throw fnfe;
         }
+        return new FileInputStream(file);
     }
 
 
-    public static List<String> readLines(InputStream input)
-            throws IOException
-    {
-        input.markSupported(); // force NPE
-        InputStreamReader reader = new InputStreamReader(input);
-        return readLines(reader);
+    public static FileOutputStream openOutputStreamQuietly(String file) {
+        return openOutputStreamQuietly(UraFileUtils.getCanonicalFile(file));
+    }
+    /**
+     * 。<br>
+     * @param file
+     * @return
+     */
+    public static FileOutputStream openOutputStreamQuietly(File file) {
+        FileOutputStream os = null;
+        try {
+            File canonicalFile = UraFileUtils.getCanonicalFile(file);
+            os = openOutputStream(canonicalFile);
+        } catch (UraIORuntimeException ioe) {
+            LOGGER.log("URA-E019", ioe);
+        } catch (Exception e) {
+            LOGGER.log("URA-T999", e);
+        }
+        return os;
     }
 
-    public static List<String> readLines(InputStream input, String encoding)
-            throws IOException
-    {
-        input.markSupported(); // force NPE
-        if (encoding == null) {
-            return readLines(input);
-        }
-        InputStreamReader reader = new InputStreamReader(input, encoding);
-        return readLines(reader);
+
+    public static FileOutputStream openOutputStream(String file)
+            throws IOException {
+        return openOutputStream(UraFileUtils.getCanonicalFile(file));
     }
 
-    public static List<String> readLines(Reader input)
-            throws IOException
-    {
-        input.markSupported(); // force NPE
-        BufferedReader reader = new BufferedReader(input);
-        List<String> list = new ArrayList<String>();
-        String line = reader.readLine();
-        while (line != null)
-        {
-            list.add(line);
-            line = reader.readLine();
+    public static FileOutputStream openOutputStream(File file)
+            throws IOException {
+        if (file.exists()) {
+            if (file.isDirectory()) {
+                IOException ioe = new IOException();
+                LOGGER.log("URA-E014", ioe);
+                throw ioe;
+            }
+            if (!file.canWrite()) {
+                IOException ioe = new IOException();
+                LOGGER.log("URA-E016", ioe);
+                throw ioe;
+            }
+        } else {
+            File parent = file.getParentFile();
+            if ((parent != null) && (!parent.exists()) &&
+                    (!parent.mkdirs())) {
+                IOException ioe = new IOException();
+                LOGGER.log("URA-E017", ioe);
+                throw ioe;
+            }
         }
-        return list;
+        return new FileOutputStream(file);
+    }
+
+
+    public static InputStream toInputStream(String input) {
+        byte[] bytes = input.getBytes();
+        return new ByteArrayInputStream(bytes);
+    }
+
+    public static InputStream toInputStream(String input, String encoding)
+            throws IOException {
+        byte[] bytes = encoding != null ? input.getBytes(encoding) : input.getBytes();
+        return new ByteArrayInputStream(bytes);
+    }
+
+    public static void write(byte[] data, OutputStream output)
+            throws IOException {
+
+        if (data != null) {
+            output.write(data);
+        }
+    }
+
+    public static void write(byte[] data, Writer output)
+            throws IOException {
+        if (data != null) {
+            output.write(new String(data));
+        }
+    }
+
+    public static void write(byte[] data, Writer output, String encoding)
+            throws IOException {
+        if (data != null) {
+            if (encoding == null) {
+                write(data, output);
+            } else {
+                output.write(new String(data, encoding));
+            }
+        }
+    }
+
+    public static void write(char[] data, Writer output)
+            throws IOException {
+        if (data != null) {
+            output.write(data);
+        }
+    }
+
+    public static void write(char[] data, OutputStream output)
+            throws IOException {
+        if (data != null) {
+            output.write(new String(data).getBytes());
+        }
+    }
+
+    public static void write(char[] data, OutputStream output, String encoding)
+            throws IOException {
+        if (data != null) {
+            if (encoding == null) {
+                write(data, output);
+            } else {
+                output.write(new String(data).getBytes(encoding));
+            }
+        }
+    }
+
+    public static void write(String data, Writer output)
+            throws IOException {
+        if (data != null) {
+            output.write(data);
+        }
+    }
+
+    public static void write(String data, OutputStream output)
+            throws IOException {
+        if (data != null) {
+            output.write(data.getBytes());
+        }
+    }
+
+    public static void write(String data, OutputStream output, String encoding)
+            throws IOException {
+        if (data != null) {
+            if (encoding == null) {
+                write(data, output);
+            } else {
+                output.write(data.getBytes(encoding));
+            }
+        }
+    }
+
+    public static void write(StringBuffer data, Writer output)
+            throws IOException {
+        if (data != null) {
+            output.write(data.toString());
+        }
+    }
+
+    public static void write(StringBuffer data, OutputStream output)
+            throws IOException {
+        if (data != null) {
+            output.write(data.toString().getBytes());
+        }
+    }
+
+    public static void write(StringBuffer data, OutputStream output, String encoding)
+            throws IOException {
+        if (data != null) {
+            if (encoding == null) {
+                write(data, output);
+            } else {
+                output.write(data.toString().getBytes(encoding));
+            }
+        }
     }
 
 }

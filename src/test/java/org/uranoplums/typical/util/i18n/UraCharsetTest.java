@@ -23,6 +23,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.uranoplums.typical.io.UraFileUtils;
 import org.uranoplums.typical.io.UraIOUtils;
+import org.uranoplums.typical.io.UraRWUtils;
 import org.uranoplums.typical.lang.UraObject;
 import org.uranoplums.typical.util.UraClassUtils;
 import org.uranoplums.typical.util.UraStringUtils;
@@ -161,8 +162,8 @@ public class UraCharsetTest extends UraObject {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            UraIOUtils.closeQuietly(br);
-            UraIOUtils.closeQuietly(isr);
+            UraRWUtils.closeQuietly(br);
+            UraRWUtils.closeQuietly(isr);
             UraIOUtils.closeQuietly(is);
         }
 
@@ -173,7 +174,7 @@ public class UraCharsetTest extends UraObject {
     public void testgetCharsetShiftJIS05() throws IOException {
         File canF = new File(".\\bin");
 
-        //File f = UraFileUtils.newFile(".\\bin\\charset_test.txt", canF.getCanonicalPath());
+        //File f = UraRWUtils.newFile(".\\bin\\charset_test.txt", canF.getCanonicalPath());
         File f = UraFileUtils.newFile(".\\bin\\charset_test_euc.txt", canF.getCanonicalPath());
         Charset target = UraCharset.ME.getCharset(f);
 
