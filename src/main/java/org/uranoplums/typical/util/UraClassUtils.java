@@ -73,9 +73,49 @@ public class UraClassUtils extends UraUtils {
      * @param classArray 対象配列
      * @return 対象配列のクラス
      */
-    @SuppressWarnings ({"unchecked", "hiding"})
-    public static final <T> Class<T> getArrayClass(T[] classArray) {
-        return (Class<T>) classArray.getClass().getComponentType();
+    @SuppressWarnings ({"unchecked"})
+    public static final <E> Class<E> getArrayClass(E classArray) {
+        return (Class<E>) classArray.getClass().getComponentType();
+    }
+
+    /**
+     * 対象配列のクラスを返却します。<br>
+     * @param classArray 対象配列
+     * @return 対象配列のクラス
+     */
+    @SuppressWarnings ({"unchecked"})
+    public static final <E> Class<E> getArrayClass(E... classArray) {
+        return (Class<E>) classArray.getClass().getComponentType();
+    }
+
+    /**
+     * 配列かどうか。<br>
+     * @param o
+     * @return
+     */
+    public static final boolean isArray(Object o){
+        return o.getClass().isArray();
+    }
+
+    /**
+     * プリミティブ型かどうか。<br>
+     * @param o
+     * @return
+     */
+    public static final boolean isPrimitive(Object o) {
+        return o.getClass().isPrimitive();
+    }
+
+    /**
+     * プリミティブ型の配列かどうか。<br>
+     * @param o
+     * @return
+     */
+    public static final boolean isPrimitiveArray(Object o) {
+        if (!isArray(o)) {
+            return false;
+        }
+        return o.getClass().getComponentType().isPrimitive();
     }
 
     /**
@@ -96,8 +136,7 @@ public class UraClassUtils extends UraUtils {
      * @param klass
      * @return 取得したクラスローダ
      */
-    @SuppressWarnings ("hiding")
-    public static final <T> ClassLoader getCurrentClassLoader(Class<T> klass) {
+    public static final <E> ClassLoader getCurrentClassLoader(Class<E> klass) {
         ClassLoader classLoader = Thread.currentThread()
                 .getContextClassLoader();
         if (classLoader == null) {
@@ -117,8 +156,7 @@ public class UraClassUtils extends UraUtils {
      * @param target
      * @return sourceにtargetのインタフェースがあればtrue
      */
-    @SuppressWarnings ("hiding")
-    public static final <S, T> boolean hasInterface(Class<S> source, Class<T> target) {
+    public static final <S, E> boolean hasInterface(Class<S> source, Class<E> target) {
         Class<?>[] intarfaceArray = source.getInterfaces();
         for (final Class<?> klass : intarfaceArray) {
             if (hasInterface(klass, target)) {

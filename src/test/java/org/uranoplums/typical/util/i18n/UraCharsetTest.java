@@ -21,6 +21,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.uranoplums.typical.io.UraFileLineReader;
 import org.uranoplums.typical.io.UraFileUtils;
 import org.uranoplums.typical.io.UraIOUtils;
 import org.uranoplums.typical.io.UraRWUtils;
@@ -147,38 +148,58 @@ public class UraCharsetTest extends UraObject {
     }
 
     @Test
-    public void testgetCharsetShiftJIS04() {
+    public void testgetCharsetShiftJIS04() throws IOException {
         InputStream is = UraClassUtils.getCurrentClassLoader().getResourceAsStream("charset_test_euc.txt");
 
         Charset charset001 = UraCharset.ME.getCharset(is);
         System.out.println("charset_test.txtはキャラセット[" + charset001.displayName()+ "]として読み込みます");
-
-        InputStreamReader isr = new InputStreamReader(is, charset001);
-        BufferedReader br = new BufferedReader(isr);
         try {
-            while(br.ready()) {
-                System.out.println("文章[" + br.readLine() + "]?読めてるかな？");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+            UraRWUtils.openReadLine(is, new UraFileLineReader() {
+                @Override
+                public void readLine(String line, String path, long lineNumber) throws IOException {
+                    System.out.println("["+lineNumber+"]行目[" + line + "]?読めてるかな？");
+                }
+            }, "charset_test_euc", charset001);
         } finally {
-            UraRWUtils.closeQuietly(br);
-            UraRWUtils.closeQuietly(isr);
             UraIOUtils.closeQuietly(is);
         }
-
-        assertEquals(charset001, Charset.forName("Shift_JIS"));
+        assertEquals(charset001, Charset.forName("x-eucJP-Open"));
     }
 
     @Test
     public void testgetCharsetShiftJIS05() throws IOException {
-        File canF = new File(".\\bin");
+       //File f = UraRWUtils.newFile(".\\bin\\charset_test.txt", canF.getCanonicalPath());
+        File includePath = new File(".\\bin");
+        UraFileUtils.setDefaultValidPath(includePath.getCanonicalPath());
+        File path = UraFileUtils.newFile(".\\bin\\charset_test_euc.txt");
+        // ファイル内容から、キャラセットを自動判定する。
+        Charset charset001 = UraCharset.ME.getCharset(path);
+        System.out.println("charset_test_euc.txtはキャラセット[" + charset001.displayName()+ "]として読み込みます");
+        // 取得したキャラセットでファイルを開く。
+        UraRWUtils.openReadLine(path, new UraFileLineReader() {
+            @Override
+            public void readLine(String line, String path, long lineNumber) throws IOException {
+                // １行毎読み込む（読んだ後、勝手に閉じる）
+                System.out.println("["+lineNumber+"]行目[" + line + "]?読めてるかな？");
+            }
+        }, charset001);
+//       });
+        System.out.println("--------------------------");
+        File pathJis = UraFileUtils.newFile(".\\bin\\charset_test.txt");
+        // ファイル内容から、キャラセットを自動判定する。
+        Charset charset002 = UraCharset.ME.getCharset(pathJis);
+        System.out.println("charset_test.txtはキャラセット[" + charset002.displayName()+ "]として読み込みます");
+        // 取得したキャラセットでファイルを開く。
+        UraRWUtils.openReadLine(pathJis, new UraFileLineReader() {
+            @Override
+            public void readLine(String line, String path, long lineNumber) throws IOException {
+                // １行毎読み込む（読んだ後、勝手に閉じる）
+                System.out.println("["+lineNumber+"]行目[" + line + "]?読めてるかな？");
+            }
+        }, charset002);
 
-        //File f = UraRWUtils.newFile(".\\bin\\charset_test.txt", canF.getCanonicalPath());
-        File f = UraFileUtils.newFile(".\\bin\\charset_test_euc.txt", canF.getCanonicalPath());
-        Charset target = UraCharset.ME.getCharset(f);
 
-        assertEquals(target, Charset.forName("Shift_JIS"));
+        assertEquals(charset001, Charset.forName("Shift_JIS"));
     }
     @Test
     public void testgetCharsetShiftJIS02() {
