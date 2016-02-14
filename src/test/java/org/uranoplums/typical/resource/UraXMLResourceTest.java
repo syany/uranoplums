@@ -65,8 +65,8 @@ public class UraXMLResourceTest {
         List<String> list = xmlResource.getResourceList("test.003");
         Map<String, Object> map = xmlResource.getResourceMap("test.002");
         String value = xmlResource.getResourceString("test.001");
-        System.out.println("test.003:" + list.toString());
-        System.out.println("test.002:" + map.toString());
+        System.out.println("test.003:" + list.toString() + "("+list.getClass().getName()+")");
+        System.out.println("test.002:" + map.toString() + "("+map.getClass().getName()+")");
         System.out.println("test.001:" + value);
         assertTrue(true);
     }

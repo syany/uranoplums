@@ -21,9 +21,10 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
+import java.util.ArrayDeque;
 import java.util.Collection;
+import java.util.Deque;
 import java.util.Map;
-import java.util.Stack;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.uranoplums.typical.exception.UraSystemRuntimeException;
@@ -51,12 +52,12 @@ public class UraObjectUtils extends ObjectUtils {
      * 型パラメータの具象型取得の実装。再帰処理される。
      * @param clazz 現在の走査対象型
      * @param targetTypeName 現在の走査対象のジェネリクス型パラメータ名
-     * @param stack 現在の走査対象型以下の継承階層が積まれたStack
+     * @param deque 現在の走査対象型以下の継承階層が積まれたStack
      * @return 該当型パラメータの具現化された型
      */
     @SuppressWarnings ("unchecked")
-    private static <T> Class<T> getGenericTypeImpl(Class<?> clazz,
-            String targetTypeName, Stack<Class<?>> stack) {
+    private static <E> Class<E> getGenericTypeImpl(Class<?> clazz,
+            String targetTypeName, Deque<Class<?>> deque) {
         TypeVariable<? extends Class<?>>[] superGenTypeAray = clazz.getSuperclass().getTypeParameters();
         // 走査対象の型パラメータの名称(Tなど)から宣言のインデックスを取得
         int index = 0;
@@ -77,19 +78,19 @@ public class UraObjectUtils extends ObjectUtils {
         Type y = type.getActualTypeArguments()[index];
         // 具象型で継承されている場合
         if (y instanceof Class) {
-            return (Class<T>) y;
+            return (Class<E>) y;
         }
         // ジェネリックパラメータの場合
         if (y instanceof TypeVariable) {
             TypeVariable<Class<?>> tv = (TypeVariable<Class<?>>) y;
             // 再帰して同名の型パラメータを継承階層を下りながら解決を試みる
-            Class<?> sub = stack.pop();
-            return getGenericTypeImpl(sub, tv.getName(), stack);
+            Class<?> sub = deque.pop();
+            return getGenericTypeImpl(sub, tv.getName(), deque);
         }
         // ジェネリック型パラメータを持つ型の場合
         if (y instanceof ParameterizedType) {
             ParameterizedType pt = (ParameterizedType) y;
-            return (Class<T>) pt.getRawType();
+            return (Class<E>) pt.getRawType();
         }
         throw new IllegalArgumentException("予期せぬ型 : "
                 + y.toString() + " (" + y.getClass() + ")");
@@ -189,7 +190,7 @@ public class UraObjectUtils extends ObjectUtils {
      * @param targetTypeName 何型で具現化されたを確認したい型パラメータのプレースホルダ名
      * @return 具現化された型
      */
-    public static <T> Class<T> getGenericType(
+    public static <E> Class<E> getGenericType(
             Class<?> clazz, Class<?> targetClass,
             String targetTypeName) {
         if (!targetClass.isAssignableFrom(clazz)) {
@@ -197,11 +198,11 @@ public class UraObjectUtils extends ObjectUtils {
                     "型" + clazz.getName() + "は、型"
                             + targetClass.getName() + "を継承していません");
         }
-        Stack<Class<?>> stack = new Stack<Class<?>>();
+        Deque<Class<?>> deque = new ArrayDeque<Class<?>>();
         while (!targetClass.equals(clazz.getSuperclass())) {
-            stack.push(clazz);
+            deque.push(clazz);
             clazz = clazz.getSuperclass();
         }
-        return getGenericTypeImpl(clazz, targetTypeName, stack);
+        return getGenericTypeImpl(clazz, targetTypeName, deque);
     }
 }

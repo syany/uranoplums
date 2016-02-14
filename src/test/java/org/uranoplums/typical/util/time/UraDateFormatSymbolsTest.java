@@ -51,7 +51,7 @@ public class UraDateFormatSymbolsTest {
     }
 
     @Test
-    public void foematPatternTest() throws Exception {
+    public void formatPatternTest() throws Exception {
         Locale.setDefault(Locale.UK);
         // iw ヘブライ語に注意”エスケープ必須
         for (Locale locale : Locale.getAvailableLocales()) {

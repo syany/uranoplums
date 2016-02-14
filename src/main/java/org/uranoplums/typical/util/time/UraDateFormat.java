@@ -114,6 +114,22 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
     protected Map<String, UraDateFormat.PrinterField> optionalFormatMap = newHashMap(4, FACTOR.GREATER);
     /** 追加用パーサ */
     protected Map<String, UraDateFormat.ParserField> optionalParserMap = newHashMap(4, FACTOR.GREATER);
+    /**  */
+    protected UraCalendar defaultParsedCalendar;
+
+    /**
+     * @param defaultParsedCalendar defaultParsedCalendarを設定します。
+     * @return
+     */
+    public final UraDateFormat setDefaultParsedCalendar(UraCalendar defaultParsedCalendar) {
+        this.defaultParsedCalendar = defaultParsedCalendar;
+        return this;
+    }
+
+    {
+        defaultParsedCalendar = UraCalendarUtils.newUraCalendar();
+        defaultParsedCalendar.clear();
+    }
     static {
         //
         CACHED_INSTANCES = newConcurrentHashMap(3);
@@ -1043,8 +1059,8 @@ public class UraDateFormat extends Format implements UraObjectCommoner {
      * @return
      */
     protected UraCalendar subParse(String source, ParsePosition pos, Locale locale) {
-        UraCalendar parsedCalendar = UraCalendarUtils.newUraCalendar();
-        parsedCalendar.clear();
+        UraCalendar parsedCalendar = UraCalendarUtils.newUraCalendar(defaultParsedCalendar.getTimeInMillis());
+//        parsedCalendar.clear();
         for (final UraTuple<String, ParserField> parser : this.parserPatternList) {
             parser.getValue().setParseField(source, parsedCalendar, pos, locale);
         }

@@ -35,8 +35,6 @@ import org.slf4j.Logger;
 import org.uranoplums.typical.log.UraLoggerFactory;
 import org.uranoplums.typical.resource.UraJSONResource;
 
-import sun.util.TimeZoneNameUtility;
-
 /**
  * uranoplumsによるDateFormatSymbols拡張クラス。<br>
  *
@@ -146,7 +144,8 @@ public class UraDateFormatSymbols extends DateFormatSymbols {
     private void writeObject(ObjectOutputStream stream) throws IOException {
         logger.trace("> writeObject({})", stream);
         if (getZoneStrings() == null) {
-            setZoneStrings(TimeZoneNameUtility.getZoneStrings(tmpLocale));
+            this.setZoneStrings(this.getZoneStrings());
+//            setZoneStrings(TimeZoneNameUtility.getZoneStrings(tmpLocale));
         }
         stream.defaultWriteObject();
         logger.trace("< return");

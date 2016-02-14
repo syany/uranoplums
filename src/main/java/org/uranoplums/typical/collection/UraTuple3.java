@@ -1,18 +1,18 @@
 /*
  * Copyright 2013-2015 the Uranoplums Foundation and the Others.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
- * 
+ *
  * $Id: UraTuple3.java$
  */
 package org.uranoplums.typical.collection;
@@ -21,7 +21,7 @@ import org.uranoplums.typical.lang.UraSerialDataObject;
 
 /**
  * UraTuple3クラス。<br>
- * 
+ *
  * @since 2015/03/10
  * @author syany
  * @param <T1>
@@ -49,7 +49,7 @@ public class UraTuple3<T1, T2, T3> extends UraSerialDataObject {
 
     /**
      * インスタンスを構築します。
-     * 
+     *
      * @param value1
      *            1番目の値
      * @param value2
@@ -65,7 +65,7 @@ public class UraTuple3<T1, T2, T3> extends UraSerialDataObject {
 
     /**
      * 3つの値の組を作成して返します。
-     * 
+     *
      * @param <T1>
      *            1番目の値の型
      * @param <T2>
@@ -87,7 +87,7 @@ public class UraTuple3<T1, T2, T3> extends UraSerialDataObject {
 
     /**
      * 1番目の値を返します。
-     * 
+     *
      * @return 1番目の値
      */
     public T1 getValue1() {
@@ -96,7 +96,7 @@ public class UraTuple3<T1, T2, T3> extends UraSerialDataObject {
 
     /**
      * 2番目の値を返します。
-     * 
+     *
      * @return 2番目の値
      */
     public T2 getValue2() {
@@ -105,40 +105,40 @@ public class UraTuple3<T1, T2, T3> extends UraSerialDataObject {
 
     /**
      * 3番目の値を返します。
-     * 
+     *
      * @return 3番目の値
      */
     public T3 getValue3() {
         return value3;
     }
 
-    /**
-     * 1番目の値を設定します。
-     * 
-     * @param value1
-     *            1番目の値
-     */
-    public void setValue1(final T1 value1) {
-        this.value1 = value1;
-    }
-
-    /**
-     * 2番目の値を設定します。
-     * 
-     * @param value2
-     *            2番目の値
-     */
-    public void setValue2(final T2 value2) {
-        this.value2 = value2;
-    }
-
-    /**
-     * 3番目の値を設定します。
-     * 
-     * @param value3
-     *            3番目の値
-     */
-    public void setValue3(final T3 value3) {
-        this.value3 = value3;
-    }
+//    /**
+//     * 1番目の値を設定します。
+//     *
+//     * @param value1
+//     *            1番目の値
+//     */
+//    public void setValue1(final T1 value1) {
+//        this.value1 = value1;
+//    }
+//
+//    /**
+//     * 2番目の値を設定します。
+//     *
+//     * @param value2
+//     *            2番目の値
+//     */
+//    public void setValue2(final T2 value2) {
+//        this.value2 = value2;
+//    }
+//
+//    /**
+//     * 3番目の値を設定します。
+//     *
+//     * @param value3
+//     *            3番目の値
+//     */
+//    public void setValue3(final T3 value3) {
+//        this.value3 = value3;
+//    }
 }

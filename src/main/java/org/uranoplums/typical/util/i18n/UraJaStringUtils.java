@@ -1,19 +1,19 @@
 /*
  * Copyright 2013-2014 the Uranoplums Foundation and the Others.
  * Copyright (c) 2007 NTT DATA Corporation
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
- * 
+ *
  * $Id: UraJaStringUtils.java$
  */
 package org.uranoplums.typical.util.i18n;
@@ -353,19 +353,20 @@ public class UraJaStringUtils extends UraStringUtils {
     }
 
     /**
-     * 
-     * @param source
-     * @return
+     * source文字列内のひらがなをカタカナへ変換します。<BR/>
+     * @param source 変換対象文字列
+     * @return ひらがなをカタカナへ変換した文字列
      */
     public static String hiraToKataTranslate(String source) {
         return hiraToKataTranslate(source, NO_TRANSLATE_KH_KK);
     }
 
     /**
-     * 
-     * @param source
-     * @param noTranslateFlag
-     * @return
+     * source文字列内のひらがなをカタカナへ変換します。<BR/>
+     *
+     * @param source 変換対象文字列
+     * @param noTranslateFlag 変換対象外文字フラグ
+     * @return 変換した文字列
      */
     public static String hiraToKataTranslate(String source, int noTranslateFlag) {
         // 空文字、nullならばそのまま返却
@@ -386,21 +387,63 @@ public class UraJaStringUtils extends UraStringUtils {
         // 変換後の文字列を返却
         return String.valueOf(charArray);
     }
-
     /**
-     * 
-     * @param source
-     * @return
+     * sourceのひらがなをカタカナへ、カタカナをひらがなへ変換します。<br>
+     * @param source 変換対象文字列
+     * @return 変換した文字列
+     */
+    public static String hiraKataToggle(String source) {
+        return hiraKataToggle(source, UraJaStringUtils.NO_TRANSLATE_KH_KK);
+    }
+    /**
+     * sourceのひらがなをカタカナへ、カタカナをひらがなへ変換します。<br>
+     * @param source 変換対象文字列
+     * @param noTranslateFlag 変換対象外文字フラグ
+     * @return 変換した文字列
+     */
+    public static String hiraKataToggle(String source, int noTranslateFlag) {
+        // 空文字、nullならばそのまま返却
+        if (isEmpty(source)) {
+            return EMPTY;
+        }
+        // char配列にする
+        char[] charArray = source.toCharArray();
+        for (int i = 0; i < charArray.length; i++) {
+            int cInt = charArray[i];
+            if ((cInt >= HIRA_MIN_INDEX && cInt <= HIRA_MAX_INDEX) ||
+                    ((noTranslateFlag & NO_TRANSLATE_KH_VU) == 0 && cInt == HIRA_VU_INDEX) ||
+                    ((noTranslateFlag & NO_TRANSLATE_KH_KK) == 0 && (cInt >= HIRA_KK_INDEX && cInt <= (HIRA_KK_INDEX + 1))) ||
+                    ((noTranslateFlag & NO_TRANSLATE_KH_IM) == 0 && (cInt >= HIRA_IM_INDEX && cInt <= (HIRA_IM_INDEX + 1)))) {
+                // ひらがな→カタカナ
+                charArray[i] = (char) (cInt + HK_DIFF);
+            } else if ((cInt >= KATA_MIN_INDEX && cInt <= KATA_MAX_INDEX) ||
+                    ((noTranslateFlag & NO_TRANSLATE_KH_VU) == 0 && cInt == KATA_VU_INDEX) ||
+                    ((noTranslateFlag & NO_TRANSLATE_KH_KK) == 0 && (cInt >= KATA_KK_INDEX && cInt <= (KATA_KK_INDEX + 1))) ||
+                    ((noTranslateFlag & NO_TRANSLATE_KH_IM) == 0 && (cInt >= KATA_IM_INDEX && cInt <= (KATA_IM_INDEX + 1)))) {
+                // カタカナ→ひらがな
+                charArray[i] = (char) (cInt - HK_DIFF);
+            } else if ((noTranslateFlag & NO_TRANSLATE_KH_WA) == 0 && cInt == KATA_WA_INDEX) {
+                // ワﾞ→ゔ（かたかな）
+                charArray[i] = (char) HIRA_VU_INDEX;
+            }
+        }
+        // 変換後の文字列を返却
+        return String.valueOf(charArray);
+    }
+    /**
+     * sourceのカタカナをひらがなへ変換します。<BR/>
+     * @param source 変換対象文字列
+     * @return 変換した文字列
      */
     public static String kataToHiraTranslate(String source) {
         return kataToHiraTranslate(source, NO_TRANSLATE_KH_KK);
     }
 
     /**
-     * 
-     * @param source
-     * @param noTranslateFlag
-     * @return
+     * sourceのカタカナをひらがなへ変換します。<BR/>
+     * @param source 変換対象文字列
+     * @param noTranslateFlag 変換対象外文字フラグ
+     * @return 変換した文字列
      */
     public static String kataToHiraTranslate(String source, int noTranslateFlag) {
         // 空文字、nullならばそのまま返却

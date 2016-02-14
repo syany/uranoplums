@@ -17,19 +17,6 @@
  */
 package org.uranoplums.typical.util.time;
 
-import static org.junit.Assert.*;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
-
-import org.apache.commons.lang3.RandomUtils;
-import org.apache.commons.lang3.time.FastDateFormat;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * UraDateFormatSpeedTestクラス。<br>
@@ -38,122 +25,121 @@ import org.junit.Test;
  * @author syany
  */
 public class UraDateFormatSpeedTest {
-
-    UraCalendar cal = UraCalendarUtils.newUraCalendar();
-    private final TimeZone defTZ = (TimeZone) TimeZone.getDefault().clone();
-
-    /**
-     * デフォルトコンストラクタ。<br>
-     */
-    public UraDateFormatSpeedTest() {
-        Locale.setDefault(Locale.JAPAN);
-    }
-
-    @After
-    public void after() {
-        TimeZone.setDefault(this.defTZ);
-        cal.setTimeZone(defTZ);
-    }
-
-    @Test
-    public void _2externalTestFotmatFast() {
-        long ut = 0L;
-        String ff = null;
-        for (int i = 0; i < 1000000; i++) {
-            // FastDateFormat sdf = FastDateFormat.getInstance("yyyy-MM-dd hh:mm:ss.SSS");
-            FastDateFormat sdf = FastDateFormat.getInstance("yyyy-MM-dd");
-            ut = RandomUtils.nextLong(0L, 600188400000L);
-            ff = sdf.format(new Date(ut));
-        }
-        System.out.println("[" + ff + "]");
-        assertEquals("yyyy-MM-dd hh:mm:ss.SSS", ff);
-    }
-
-    @Test
-    public void _1externalTestFotmatSimple() {
-        long ut = 0L;
-        String ff = null;
-        for (int i = 0; i < 1000000; i++) {
-            // SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            ut = RandomUtils.nextLong(0L, 600188400000L);
-            ff = sdf.format(new Date(ut));
-        }
-        System.out.println("[" + ff + "]");
-        assertEquals("yyyy-MM-dd hh:mm:ss.SSS", ff);
-    }
-
-    @Test
-    public void _3externalTestFotmatUra() {
-        long ut = 0L;
-        String ff = null;
-        for (int i = 0; i < 1000000; i++) {
-            // UraDateFormat sdf = UraDateFormat.getInstanceRef("yyyy-MM-dd hh:mm:ss.SSS");
-            UraDateFormat sdf = UraDateFormat.getInstanceRef("yyyy-MM-dd");
-            ut = RandomUtils.nextLong(0L, 600188400000L);
-            UraCalendar cal = UraCalendarUtils.newUraCalendar();
-            cal.setTimeInMillis(ut);
-            ff = sdf.format(cal);
-        }
-        System.out.println("[" + ff + "]");
-        assertEquals("yyyy-MM-dd hh:mm:ss.SSS", ff);
-    }
-
-    @Test
-    public void _5externalTestParseFast() throws ParseException {
-        int year = 0;
-        int month = 0;
-        int day = 0;
-        Date dt = null;
-        for (int i = 0; i < 1000000; i++) {
-            FastDateFormat sdf = FastDateFormat.getInstance("yyyy-MM-dd");
-            year = RandomUtils.nextInt(0, 2050);
-            month = RandomUtils.nextInt(0, 11);
-            day = RandomUtils.nextInt(1, 28);
-            dt = sdf.parse(String.valueOf(year) + "-" + String.valueOf(month) + "-" + String.valueOf(day));
-        }
-        System.out.println("[" + dt + "]");
-        assertEquals(new Date(), dt);
-    }
-
-    @Test
-    public void _4externalTestParseSimple() throws ParseException {
-        int year = 0;
-        int month = 0;
-        int day = 0;
-        Date dt = null;
-        for (int i = 0; i < 1000000; i++) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            year = RandomUtils.nextInt(0, 2050);
-            month = RandomUtils.nextInt(0, 11);
-            day = RandomUtils.nextInt(1, 28);
-            dt = sdf.parse(String.valueOf(year) + "-" + String.valueOf(month) + "-" + String.valueOf(day));
-        }
-        System.out.println("[" + dt + "]");
-        assertEquals(new Date(), dt);
-    }
-
-    @Test
-    public void _6externalTestParseUra() throws ParseException {
-        int year = 0;
-        int month = 0;
-        int day = 0;
-        Date dt = null;
-        for (int i = 0; i < 1000000; i++) {
-            UraDateFormat sdf = UraDateFormat.getInstanceRef("yyyy-MM-dd");
-            year = RandomUtils.nextInt(0, 2050);
-            month = RandomUtils.nextInt(0, 11);
-            day = RandomUtils.nextInt(1, 28);
-            dt = sdf.parse(String.valueOf(year) + "-" + String.valueOf(month) + "-" + String.valueOf(day));
-        }
-        System.out.println("[" + dt + "]");
-        assertEquals(new Date(), dt);
-    }
-
-    /**
-     * 。<br>
-     * @throws java.lang.Exception
-     */
-    @Before
-    public void setUp() throws Exception {}
+//    UraCalendar cal = UraCalendarUtils.newUraCalendar();
+//    private final TimeZone defTZ = (TimeZone) TimeZone.getDefault().clone();
+//
+//    /**
+//     * デフォルトコンストラクタ。<br>
+//     */
+//    public UraDateFormatSpeedTest() {
+//        Locale.setDefault(Locale.JAPAN);
+//    }
+//
+//    @After
+//    public void after() {
+//        TimeZone.setDefault(this.defTZ);
+//        cal.setTimeZone(defTZ);
+//    }
+//
+//    @Test
+//    public void _2externalTestFotmatFast() {
+//        long ut = 0L;
+//        String ff = null;
+//        for (int i = 0; i < 1000000; i++) {
+//            // FastDateFormat sdf = FastDateFormat.getInstance("yyyy-MM-dd hh:mm:ss.SSS");
+//            FastDateFormat sdf = FastDateFormat.getInstance("yyyy-MM-dd");
+//            ut = RandomUtils.nextLong(0L, 600188400000L);
+//            ff = sdf.format(new Date(ut));
+//        }
+//        System.out.println("[" + ff + "]");
+//        assertEquals("yyyy-MM-dd hh:mm:ss.SSS", ff);
+//    }
+//
+//    @Test
+//    public void _1externalTestFotmatSimple() {
+//        long ut = 0L;
+//        String ff = null;
+//        for (int i = 0; i < 1000000; i++) {
+//            // SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//            ut = RandomUtils.nextLong(0L, 600188400000L);
+//            ff = sdf.format(new Date(ut));
+//        }
+//        System.out.println("[" + ff + "]");
+//        assertEquals("yyyy-MM-dd hh:mm:ss.SSS", ff);
+//    }
+//
+//    @Test
+//    public void _3externalTestFotmatUra() {
+//        long ut = 0L;
+//        String ff = null;
+//        for (int i = 0; i < 1000000; i++) {
+//            // UraDateFormat sdf = UraDateFormat.getInstanceRef("yyyy-MM-dd hh:mm:ss.SSS");
+//            UraDateFormat sdf = UraDateFormat.getInstanceRef("yyyy-MM-dd");
+//            ut = RandomUtils.nextLong(0L, 600188400000L);
+//            UraCalendar cal = UraCalendarUtils.newUraCalendar();
+//            cal.setTimeInMillis(ut);
+//            ff = sdf.format(cal);
+//        }
+//        System.out.println("[" + ff + "]");
+//        assertEquals("yyyy-MM-dd hh:mm:ss.SSS", ff);
+//    }
+//
+//    @Test
+//    public void _5externalTestParseFast() throws ParseException {
+//        int year = 0;
+//        int month = 0;
+//        int day = 0;
+//        Date dt = null;
+//        for (int i = 0; i < 1000000; i++) {
+//            FastDateFormat sdf = FastDateFormat.getInstance("yyyy-MM-dd");
+//            year = RandomUtils.nextInt(0, 2050);
+//            month = RandomUtils.nextInt(0, 11);
+//            day = RandomUtils.nextInt(1, 28);
+//            dt = sdf.parse(String.valueOf(year) + "-" + String.valueOf(month) + "-" + String.valueOf(day));
+//        }
+//        System.out.println("[" + dt + "]");
+//        assertEquals(new Date(), dt);
+//    }
+//
+//    @Test
+//    public void _4externalTestParseSimple() throws ParseException {
+//        int year = 0;
+//        int month = 0;
+//        int day = 0;
+//        Date dt = null;
+//        for (int i = 0; i < 1000000; i++) {
+//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//            year = RandomUtils.nextInt(0, 2050);
+//            month = RandomUtils.nextInt(0, 11);
+//            day = RandomUtils.nextInt(1, 28);
+//            dt = sdf.parse(String.valueOf(year) + "-" + String.valueOf(month) + "-" + String.valueOf(day));
+//        }
+//        System.out.println("[" + dt + "]");
+//        assertEquals(new Date(), dt);
+//    }
+//
+//    @Test
+//    public void _6externalTestParseUra() throws ParseException {
+//        int year = 0;
+//        int month = 0;
+//        int day = 0;
+//        Date dt = null;
+//        for (int i = 0; i < 1000000; i++) {
+//            UraDateFormat sdf = UraDateFormat.getInstanceRef("yyyy-MM-dd");
+//            year = RandomUtils.nextInt(0, 2050);
+//            month = RandomUtils.nextInt(0, 11);
+//            day = RandomUtils.nextInt(1, 28);
+//            dt = sdf.parse(String.valueOf(year) + "-" + String.valueOf(month) + "-" + String.valueOf(day));
+//        }
+//        System.out.println("[" + dt + "]");
+//        assertEquals(new Date(), dt);
+//    }
+//
+//    /**
+//     * 。<br>
+//     * @throws java.lang.Exception
+//     */
+//    @Before
+//    public void setUp() throws Exception {}
 }

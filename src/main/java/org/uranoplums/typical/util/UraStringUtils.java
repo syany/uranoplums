@@ -1,19 +1,19 @@
 /*
  * Copyright 2013-2014 the Uranoplums Foundation and the Others.
  * Copyright 2004-2014 the Seasar Foundation and the Others.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
- * 
+ *
  * $Id: UraJaStringUtils.java$
  */
 package org.uranoplums.typical.util;
@@ -150,6 +150,13 @@ public class UraStringUtils {
         return org.apache.commons.lang3.StringUtils.chomp(str);
     }
 
+    /**
+     * 。<br>
+     * @param str
+     * @param separator
+     * @return
+     * @deprecated This feature
+     */
     public static String chomp(String str, String separator) {
         return org.apache.commons.lang3.StringUtils.chomp(str, separator);
     }
@@ -248,10 +255,12 @@ public class UraStringUtils {
         return new String(chars);
     }
 
+    @SuppressWarnings ("hiding")
     public static <T extends CharSequence> T defaultIfBlank(T str, T defaultStr) {
         return org.apache.commons.lang3.StringUtils.defaultIfBlank(str, defaultStr);
     }
 
+    @SuppressWarnings ("hiding")
     public static <T extends CharSequence> T defaultIfEmpty(T str, T defaultStr) {
         return org.apache.commons.lang3.StringUtils.defaultIfEmpty(str, defaultStr);
     }
@@ -326,7 +335,7 @@ public class UraStringUtils {
 
     /**
      * Calls {@link String#getBytes(Charset)}
-     * 
+     *
      * @param string
      *            The string to encode (if null, return null).
      * @param charset
@@ -343,7 +352,7 @@ public class UraStringUtils {
     /**
      * Encodes the given string into a sequence of bytes using the UTF-8 charset, storing the result into a new byte
      * array.
-     * 
+     *
      * @param string
      *            the String to encode, may be {@code null}
      * @return encoded bytes, or {@code null} if the input string was {@code null}
@@ -641,6 +650,7 @@ public class UraStringUtils {
         return org.apache.commons.lang3.StringUtils.join(array, separator, startIndex, endIndex);
     }
 
+    @SuppressWarnings ("hiding")
     public static <T> String join(T... elements) {
         return org.apache.commons.lang3.StringUtils.join(elements);
     }
@@ -743,6 +753,33 @@ public class UraStringUtils {
         return org.apache.commons.lang3.StringUtils.mid(str, pos, len);
     }
 
+    private static IllegalStateException newIllegalStateException(String charsetName, UnsupportedEncodingException e)
+    {
+        return new IllegalStateException(charsetName + ": " + e);
+    }
+
+    private static String newString(byte[] bytes, Charset charset)
+    {
+        return bytes == null ? null : new String(bytes, charset);
+    }
+
+    public static String newString(byte[] bytes, String charsetName)
+    {
+        if (bytes == null) {
+            return null;
+        }
+        try
+        {
+            return new String(bytes, charsetName);
+        } catch (UnsupportedEncodingException e)
+        {
+            throw newIllegalStateException(charsetName, e);
+        }
+    }
+    public static String newStringUtf8(byte[] bytes)
+    {
+        return newString(bytes, UraCharset.UTF8);
+    }
     public static String normalizeSpace(String str) {
         return org.apache.commons.lang3.StringUtils.normalizeSpace(str);
     }

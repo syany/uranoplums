@@ -85,6 +85,8 @@ public class UraXMLResource extends AbsUraHierarchyResource {
             inputSource.setCharacterStream(isr);
             saxParser.parse(inputSource, uraXMLResourceParseHandler);
             Map<String, Object> resourceMap = uraXMLResourceParseHandler.getParsedMap();
+            // immutable
+            //resourceMap = org.uranoplums.typical.collection.UraCollectionUtils.deepUnmodifiableMap(resourceMap);
             // ロケール別にリソースマップへput
             for (final Map.Entry<String, Object> entry : resourceMap.entrySet()) {
                 String key = entry.getKey();

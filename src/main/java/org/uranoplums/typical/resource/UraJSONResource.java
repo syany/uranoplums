@@ -84,6 +84,8 @@ public class UraJSONResource extends AbsUraHierarchyResource {
             if (jsonMap.size() < 1) {
                 return;
             }
+            // immutable
+            //jsonMap = UraCollectionUtils.deepUnmodifiableMap(jsonMap);
             // ロケール別にリソースマップへput
             for (final Map.Entry<String, Object> entry : jsonMap.entrySet()) {
                 String key = entry.getKey();

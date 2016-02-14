@@ -20,8 +20,11 @@ package org.uranoplums.typical.collection;
 import static org.junit.Assert.*;
 import static org.uranoplums.typical.collection.factory.UraListFactory.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.junit.After;
@@ -29,6 +32,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.uranoplums.typical.collection.UraCollectionUtils.UraUnmodifiableChange;
 
 
 /**
@@ -161,4 +165,108 @@ public class UraCollectionUtilsTest {
         assertEquals(UraCollectionUtils.addUnique(list, exSet), actualSet);
 
     }
+
+    @Test(expected=UnsupportedOperationException.class)
+    public final void testUnmodified01() {
+        Map<String, List<Map<String, String>>> ext = new HashMap<String, List<Map<String, String>>>();
+
+        List<Map<String, String>> entryList01 = new ArrayList<Map<String, String>>();
+        Map<String, String> entryMap01 = new HashMap<String, String>();
+        entryMap01.put("k01::01", "val01::01");
+        entryMap01.put("k01::02", "val01::02");
+        entryList01.add(entryMap01);
+        Map<String, String> entryMap02 = new HashMap<String, String>();
+        entryMap02.put("k02::01", "val02::01");
+        List<Map<String, String>> entryList02 = new ArrayList<Map<String, String>>();
+        entryList02.add(entryMap02);
+        ext.put("e01", entryList01);
+        ext.put("e02", entryList02);
+        ext = UraCollectionUtils.deepUnmodifiableMap(ext);
+        for (final List<Map<String, String>> list : ext.values()) {
+                System.out.println("xx class : " + list.getClass().getName());
+            for (final Map<String, String> map : list) {
+                    System.out.println("xx class : " + map.getClass().getName());
+                    map.put("oo", "pp"); //force exception
+            }
+        }
+
+        fail("トウタツシマセン");
+    }
+    @Test(expected=UnsupportedOperationException.class)
+    public void testUnmodified02() throws Exception {
+//        Integer i = 0;
+        Map<String, UraTuple3<String,String,String>> map = new HashMap<String, UraTuple3<String,String,String>>();
+        UraTuple3<String,String,String> t1 = UraTuple3.tuple3("tt", "oo", "yy");
+        UraTuple3<String,String,String> t2 = UraTuple3.tuple3("tt", "oo", "yy");
+        map.put("k1", t1);
+        map.put("k2", t2);
+        System.out.println(t1.getClass().getName() + "(before) : "+ t1.getValue1());
+//        t1.setValue1("zzzz");
+        t1.value1 = "zzzz";
+        System.out.println(t1.getClass().getName() + "(after) : "+ t1.getValue1());
+        map = UraCollectionUtils.deepUnmodifiableMap(map, new UneditAna());
+        for (final UraTuple3<String,String,String> v : map.values()) {
+            System.out.println(v.getClass().getName() + " : "+ v.getValue1());
+            ((UneditableTaple3) v).setValue1("hh");
+        }
+        fail("トウタツシマセン");
+    }
+}
+
+class UneditAna implements UraUnmodifiableChange {
+    /* (非 Javadoc)
+     * @see org.uranoplums.typical.collection.UraCollectionUtils.UraUnmodifiableChange#transfer(java.lang.Object)
+     */
+    @SuppressWarnings ("unchecked")
+    @Override
+    public <E> E transfer(E source) {
+        if (source instanceof UraTuple3) {
+            UraTuple3<?, ?, ?> t = UraTuple3.class.cast(source);
+            source = (E) new UneditableTaple3(t.getValue1(), t.getValue2(), t.getValue3());
+        }
+        return source;
+    }
+
+}
+
+class UneditableTaple3<T1, T2, T3> extends UraTuple3<T1, T2, T3> {
+
+    /**  */
+    private static final long serialVersionUID = 1L;
+
+
+    /**
+     * デフォルトコンストラクタ。<br>
+     * @param value1
+     * @param value2
+     * @param value3
+     */
+    public UneditableTaple3(T1 value1, T2 value2, T3 value3) {
+        super(value1, value2, value3);
+    }
+
+    /* (非 Javadoc)
+     * @see org.uranoplums.typical.collection.UraTuple3#setValue1(java.lang.Object)
+     */
+//    @Override
+    public void setValue1(T1 value1) {
+        throw new UnsupportedOperationException();
+    }
+
+    /* (非 Javadoc)
+     * @see org.uranoplums.typical.collection.UraTuple3#setValue2(java.lang.Object)
+     */
+//    @Override
+    public void setValue2(T2 value2) {
+        throw new UnsupportedOperationException();
+    }
+
+    /* (非 Javadoc)
+     * @see org.uranoplums.typical.collection.UraTuple3#setValue3(java.lang.Object)
+     */
+//    @Override
+    public void setValue3(T3 value3) {
+        throw new UnsupportedOperationException();
+    }
+
 }

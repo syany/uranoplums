@@ -135,6 +135,15 @@ public class UraJaStringUtilsTest {
         String ext04 = "ヾぅゔヷゕゖ";
         assertEquals(ext04, act04);
     }
+    @Test
+    public final void testHiraKataToggle01() {
+        String srcTogle = "ヰスキィゐすきぃヾゥヴヷヵヶゞぅゔゔゕゖ";
+        String actTogle = UraJaStringUtils.hiraKataToggle(srcTogle);
+        System.out.println("`"+ srcTogle +"' のひらがなは `"+ actTogle +"' です。");
+        String extTogle = "ゐすきぃヰスキィゞぅゔゔヵヶヾゥヴヴゕゖ";
+        assertEquals(extTogle, actTogle);
+    }
+
     /**
      * {@link org.uranoplums.typical.util.i18n.UraJaStringUtils#kataToHiraTranslate(java.lang.String, int)} のためのテスト・メソッド。
      */

@@ -3,6 +3,8 @@
  */
 package org.uranoplums.typical.util.i18n;
 
+import static org.uranoplums.typical.collection.factory.UraMapFactory.*;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,12 +12,10 @@ import java.util.regex.Pattern;
 
 import org.uranoplums.typical.util.UraUtils;
 
-import static org.uranoplums.typical.collection.factory.UraMapFactory.*;
-
 /**
  * ローマ字（ヘボン式）変換します。<br>
  * @author syany
- * 
+ *
  */
 public class UraRomanTranslationUtils extends UraUtils {
 
@@ -387,7 +387,7 @@ public class UraRomanTranslationUtils extends UraUtils {
     }
 
     /**
-     * 
+     *
      * @param source
      * @return
      */
@@ -404,7 +404,7 @@ public class UraRomanTranslationUtils extends UraUtils {
     }
 
     /**
-     * 
+     *
      * @param source
      * @return 対象文字ならtrue
      */
@@ -412,22 +412,37 @@ public class UraRomanTranslationUtils extends UraUtils {
         return (BASE_CHAR <= source && END_CHAR >= source);
     }
 
-    /**
-     * 
-     * @param source
-     * @return 変換後のローマ字
-     */
-    public static String kanaToHepburn(String source) {
-        return kanaToHepburn(source, 0);
+    public static String katakanaToHepburn(String source, int noTranslateHiragana, int noTranslateRoman) {
+        String sourceHira = UraJaStringUtils.kataToHiraTranslate(source, noTranslateHiragana);
+        return hiraganaToHepburn(sourceHira, noTranslateRoman);
+    }
+
+    public static String katakanaToHepburn(String source, int noTranslateRoman) {
+        String sourceHira = UraJaStringUtils.kataToHiraTranslate(source);
+        return hiraganaToHepburn(sourceHira, noTranslateRoman);
+    }
+
+    public static String katakanaToHepburn(String source) {
+        String sourceHira = UraJaStringUtils.kataToHiraTranslate(source);
+        return hiraganaToHepburn(sourceHira);
     }
 
     /**
-     * 
+     *
      * @param source
-     * @param noTranslateFlag
      * @return 変換後のローマ字
      */
-    public static String kanaToHepburn(String source, int noTranslateFlag) {
+    public static String hiraganaToHepburn(String source) {
+        return hiraganaToHepburn(source, 0);
+    }
+
+    /**
+     *
+     * @param source
+     * @param noTranslateRoman
+     * @return 変換後のローマ字
+     */
+    public static String hiraganaToHepburn(String source, int noTranslateRoman) {
         // 引数validation
         if (UraJaStringUtils.isEmpty(source)) {
             return UraJaStringUtils.EMPTY;
@@ -439,7 +454,7 @@ public class UraRomanTranslationUtils extends UraUtils {
         // 初期化
         StringBuilder result = new StringBuilder();
         // 処理開始
-        String sourceHira = UraJaStringUtils.kataToHiraTranslate(source, 0);
+        String sourceHira = source;//UraJaStringUtils.kataToHiraTranslate(source, 0);
         // サロゲートを無視した長さ
         int maxLen = sourceHira.length();
         // 1字前情報
@@ -453,7 +468,7 @@ public class UraRomanTranslationUtils extends UraUtils {
             if (isInvalidWord(targetChar)) {
                 continue;
             }
-            if (((noTranslateFlag & NO_TRANSLATE_IM) == 0) && (i > 0)) {
+            if (((noTranslateRoman & NO_TRANSLATE_IM) == 0) && (i > 0)) {
                 // 踊り字対応
                 if (targetChar == IM_NORMAL
                         && AFTER_DAKUON_PATTERN.matcher(
@@ -527,7 +542,7 @@ public class UraRomanTranslationUtils extends UraUtils {
                             char[] t = {nowChar[0]};
                             oldChar = t;
                         }
-                    } else if (((noTranslateFlag & NO_TRANSLATE_CHOUON) == 0)
+                    } else if (((noTranslateRoman & NO_TRANSLATE_CHOUON) == 0)
                             && (oldChar[oldChar.length - 1] == nowChar[0] || (oldChar[oldChar.length - 1] == CHOUON_O && nowChar[0] == CHOUON_U))) {
                         // 長音判定
                         // 同じ母音がかぶった場合、もしくは0とUの場合、現在値の先頭を削除した状態で再登録する。
@@ -554,13 +569,32 @@ public class UraRomanTranslationUtils extends UraUtils {
         // return result.toString();
     }
 
+    public static String katakanaToKunrei(String source, int noTranslateHiragana, int noTranslateRoman) {
+        String sourceHira = UraJaStringUtils.kataToHiraTranslate(source, noTranslateHiragana);
+        return hiraganaToKunrei(sourceHira, noTranslateRoman);
+    }
+
+    public static String katakanaToKunrei(String source, int noTranslateRoman) {
+        String sourceHira = UraJaStringUtils.kataToHiraTranslate(source);
+        return hiraganaToKunrei(sourceHira, noTranslateRoman);
+    }
+
+    public static String katakanaToKunrei(String source) {
+        String sourceHira = UraJaStringUtils.kataToHiraTranslate(source);
+        return hiraganaToKunrei(sourceHira);
+    }
+
+    public static String hiraganaToKunrei(String source) {
+        return hiraganaToKunrei(source, 0);
+    }
+
     /**
      * 。<br>
      * @param source
      * @param noTranslateFlag
      * @return 訓令式
      */
-    public static String kanaToKunrei(String source, int noTranslateFlag) {
+    public static String hiraganaToKunrei(String source, int noTranslateFlag) {
         // 引数validation
         if (UraJaStringUtils.isEmpty(source)) {
             return UraJaStringUtils.EMPTY;
@@ -572,7 +606,7 @@ public class UraRomanTranslationUtils extends UraUtils {
         // 初期化
         StringBuilder result = new StringBuilder();
         // 処理開始
-        String sourceHira = UraJaStringUtils.kataToHiraTranslate(source, 0);
+        String sourceHira = source;//UraJaStringUtils.kataToHiraTranslate(source, 0);
         // サロゲートを無視した長さ
         int maxLen = sourceHira.length();
         // 1字前情報

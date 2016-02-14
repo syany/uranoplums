@@ -36,6 +36,7 @@ import java.util.List;
 
 import org.uranoplums.typical.log.UraLogger;
 import org.uranoplums.typical.log.UraLoggerFactory;
+import org.uranoplums.typical.util.UraClassUtils;
 import org.uranoplums.typical.util.UraUtils;
 import org.uranoplums.typical.util.i18n.UraCharset;
 
@@ -99,8 +100,8 @@ public class UraRWUtils extends UraUtils {
         }
     }
 
-    @SuppressWarnings ("unchecked")
     public static final <E extends Reader> E getResetableReader(Reader reader, E... dummy) {
+        Class<E> clazz = UraClassUtils.getArrayClass(dummy);
         Reader r = new BufferedReader(reader);
         try {
             if (r.markSupported()) {
@@ -110,11 +111,11 @@ public class UraRWUtils extends UraUtils {
             // Unlikely
             LOGGER.log("URA-T999", e);
         }
-        return (E) r;
+        return clazz.cast(r);
     }
 
-    @SuppressWarnings ("unchecked")
     public static final <E extends Reader> E getResetableReader(Reader reader, int paramInt, E... dummy) {
+        Class<E> clazz = UraClassUtils.getArrayClass(dummy);
         Reader r = new BufferedReader(reader);
         try {
             if (r.markSupported()) {
@@ -124,15 +125,15 @@ public class UraRWUtils extends UraUtils {
             // Unlikely
             LOGGER.log("URA-T999", e);
         }
-        return (E) r;
+        return clazz.cast(r);
     }
 
-    @SuppressWarnings ("unchecked")
     public static final <E extends Reader> E getResetableReaderIfNot(Reader reader, E... dummy) {
+        Class<E> clazz = UraClassUtils.getArrayClass(dummy);
         if (reader.markSupported()) {
             try {
                 reader.mark(0);
-                return (E) reader;
+                return clazz.cast(reader);
             } catch (IOException e) {
                 // Unlikely
                 LOGGER.log("URA-T999", e);
@@ -141,12 +142,12 @@ public class UraRWUtils extends UraUtils {
         return getResetableReader(reader, dummy);
     }
 
-    @SuppressWarnings ("unchecked")
     public static final <E extends Reader> E getResetableReaderIfNot(Reader reader, int paramInt, E... dummy) {
+        Class<E> clazz = UraClassUtils.getArrayClass(dummy);
         if (reader.markSupported()) {
             try {
                 reader.mark(0);
-                return (E) reader;
+                return clazz.cast(reader);
             } catch (IOException e) {
                 // Unlikely
                 LOGGER.log("URA-T999", e);
@@ -275,7 +276,7 @@ public class UraRWUtils extends UraUtils {
         }
     }
     public static final void openReadChar(String path, UraFileCharReader fileReader) throws IOException {
-        openReadChar(path, fileReader);
+        openReadChar(path, fileReader, null);
     }
 
     public static final void openReadChar(String path, UraFileCharReader fileReader, Charset charset) throws IOException {

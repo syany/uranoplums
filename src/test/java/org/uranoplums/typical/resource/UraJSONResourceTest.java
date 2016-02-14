@@ -8,6 +8,7 @@ import static org.junit.Assert.*;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -34,16 +35,25 @@ public class UraJSONResourceTest {
         //assertEquals("MESXXDD_Test!", val[0]);
         assertTrue(true);
     }
-
+    @Test
+    public void getSubResourceValue01() throws Exception {
+        UraJSONResource jsonResource = new UraJSONResource("message_test");
+        Map<String, Object> map = jsonResource.getResourceMap("test.004", "メッセージん");
+        System.out.println("m: " + map.getClass().getName());
+        for (Entry<String, Object> entry: map.entrySet()) {
+            System.out.println("k: " + entry.getKey() + ", v: [" + entry.getValue().toString() + "], (" + entry.getClass().getName() + ")");
+        }
+        assertTrue(true);
+    }
     @Test
     public final void getResourceValue01() {
         UraJSONResource jsonResource = new UraJSONResource("message_test");
         List<String> list = jsonResource.getResourceList("test.003");
         Map<String, Object> map = jsonResource.getResourceMap("test.002");
         String value = jsonResource.getResourceString("test.001");
-        System.out.println("test.003:" + list.toString());
-        System.out.println("test.002:" + map.toString());
-        System.out.println("test.001:" + value);
+        System.out.println("test.003:" + list.toString() + " (" + list.getClass().getName() + ")");
+        System.out.println("test.002:" + map.toString() + " (" + map.getClass().getName() + ")");
+        System.out.println("test.001:" + value + " (" + value.getClass().getName() + ")");
         assertTrue(true);
     }
 

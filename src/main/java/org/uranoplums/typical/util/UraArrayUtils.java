@@ -18,6 +18,9 @@
 package org.uranoplums.typical.util;
 
 import java.util.Arrays;
+import java.util.Comparator;
+
+import org.apache.commons.collections4.comparators.ComparatorChain;
 
 
 /**
@@ -38,5 +41,42 @@ public class UraArrayUtils extends UraUtils {
             elementData = Arrays.copyOf(elementData, actSize);
         }
         return elementData;
+    }
+
+    /**
+     * 。<br>
+     * @param array
+     * @param comparators
+     */
+    public static final <E> void chainSort(E[] array, Comparator<Object>... comparators) {
+        ComparatorChain<Object> cChain = new ComparatorChain<Object>();
+        for (final Comparator<Object> c : comparators) {
+            cChain.addComparator(c);
+        }
+        Arrays.sort(array, cChain);
+    }
+    /**
+     * 。<br>
+     * @param array
+     * @param fromIndex
+     * @param toIndex
+     * @param comparators
+     */
+    public static final <E> void chainSort(E[] array, int fromIndex, int toIndex, Comparator<Object>... comparators) {
+        ComparatorChain<Object> cChain = new ComparatorChain<Object>();
+        for (final Comparator<Object> c : comparators) {
+            cChain.addComparator(c);
+        }
+        Arrays.sort(array, fromIndex, toIndex, cChain);
+    }
+
+    /**
+     * 。<br>
+     * @param array
+     * @param fromIndex
+     * @param comparators
+     */
+    public static final <E> void chainSort(E[] array, int fromIndex, Comparator<Object>... comparators) {
+        chainSort(array, fromIndex, array.length -1, comparators);
     }
 }

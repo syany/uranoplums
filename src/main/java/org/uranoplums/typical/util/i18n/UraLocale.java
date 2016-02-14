@@ -66,6 +66,26 @@ public class UraLocale extends UraUtils{
         return getLocale(language, UraStringUtils.EMPTY, UraStringUtils.EMPTY);
     }
 
+    public static final Locale getDefault() {
+        return Locale.getDefault();
+    }
+
+    public static final String[] getISOCountries() {
+        return Locale.getISOCountries();
+    }
+
+    public static final String[] getISOLanguages() {
+        return Locale.getISOLanguages();
+    }
+
+    public static final Locale[] getAvailableLocales() {
+        return Locale.getAvailableLocales();
+    }
+
+    public static final void setDefault(Locale loc) {
+        Locale.setDefault(loc);
+    }
+
     public static final Locale arabic(String ...params) {
         return getLocale("ar", params);
     }

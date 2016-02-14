@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.util.Locale;
 import java.util.Properties;
 
+import org.uranoplums.typical.io.UraIOUtils;
 import org.uranoplums.typical.util.UraStringUtils;
 
 /**
@@ -123,11 +124,12 @@ public class UraPropertyResource extends AbsUraStringResource {
             } catch (IOException e) {
                 logger.error("loadLocale()", e);
             } finally {
-                try {
-                    is.close();
-                } catch (IOException e) {
-                    logger.error("loadLocale()", e);
-                }
+                UraIOUtils.closeQuietly(is);
+//                try {
+//                    is.close();
+//                } catch (IOException e) {
+//                    logger.error("loadLocale()", e);
+//                }
             }
         }
         logger.trace("  Loading resource completed");
@@ -135,6 +137,7 @@ public class UraPropertyResource extends AbsUraStringResource {
         if (props.size() < 1) {
             return;
         }
+//        props = (Properties) UraCollectionUtils.deepUnmodifiableMap(props);
         // synchronized (resources) {
         for (final String key : props.stringPropertyNames()) {
             logger.trace("  Saving message key '" + valueKey(localeKey, key));

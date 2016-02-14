@@ -22,6 +22,7 @@ import static org.uranoplums.typical.collection.factory.UraMapFactory.*;
 
 import java.lang.ref.SoftReference;
 import java.text.MessageFormat;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -99,7 +100,10 @@ public abstract class AbsUraHierarchyResource extends AbsUraResource<Object> {
             // キャッシュに無ければ、変換しキャッシュへ入れ込む。
             value = super._getResourceObject(locale, key, args);
             value = getSubResourceValue(locale, value);
-            putCachedInstance(locale, key, value);
+            if (!(value instanceof String)) {
+                // 階層を持つキャッシュのみ保存する。
+                putCachedInstance(locale, key, value);
+            }
         }
 
         if (value instanceof String) {
@@ -245,7 +249,7 @@ public abstract class AbsUraHierarchyResource extends AbsUraResource<Object> {
                 Object value = getSubResourceValue(locale, entry.getValue());
                 newSource.put(entry.getKey(), value);
             }
-            source = newSource;
+            source = Collections.unmodifiableMap(newSource);
         } else if (source instanceof List) {
             // リストの場合も同様
             @SuppressWarnings ("unchecked")
@@ -254,7 +258,7 @@ public abstract class AbsUraHierarchyResource extends AbsUraResource<Object> {
             for (final Object value: orgSource) {
                 newSource.add(getSubResourceValue(locale, value));
             }
-            source = newSource;
+            source = Collections.unmodifiableList(newSource);
         }
         logger.trace("< return [{}]", source);
         return source;
