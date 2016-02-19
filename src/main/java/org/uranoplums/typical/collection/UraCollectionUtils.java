@@ -40,9 +40,14 @@ import org.uranoplums.typical.util.UraUtils;
  */
 public class UraCollectionUtils extends UraUtils {
 
-    /**  */
+    /** 空のオブジェクト */
     protected static final Object PRESENT = new Object();
 
+    /**
+     * 対象の配列を対象のコレクションオブジェクトに追加します。<br>
+     * @param source
+     * @param srcArray
+     */
     protected static final <E> void _toCollection(Collection<E> source, E... srcArray) {
         source.clear();
         for (final E elm : srcArray) {

@@ -3,7 +3,8 @@
  */
 package org.uranoplums.typical.util;
 
-import java.util.ArrayList;
+import static org.uranoplums.typical.collection.factory.UraListFactory.*;
+
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ import java.util.List;
 public class UraEnvUtils extends UraUtils {
 
     static private boolean isJDK_N_OrHigher(int n) {
-        List<String> versionList = new ArrayList<String>();
+        List<String> versionList = newArrayList();
         // this code should work at least until JDK 10 (assuming n parameter is
         // always 6 or more)
         for (int i = 0; i < 5; i++) {

@@ -3,13 +3,14 @@
  */
 package org.uranoplums.typical.util.i18n;
 
+import static org.uranoplums.typical.collection.factory.UraListFactory.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -98,7 +99,7 @@ public enum UraCharset {
      */
     private final List<Charset> DECODER_LIST;
     {
-        DECODER_LIST = new ArrayList<Charset>(9);
+        DECODER_LIST = newArrayList(9);
         setUpDecoderListGreater();
     }
 

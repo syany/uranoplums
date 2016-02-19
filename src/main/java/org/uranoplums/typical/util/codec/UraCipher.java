@@ -354,7 +354,6 @@ public class UraCipher extends UraSerialDataObject implements UraEncipher {
     }
     public static class EncryptBuilder extends UraCipherBuilderImpl<EncryptBuilder>{
         protected static final String RND_KEY_ALG = "SHA1PRNG";
-        protected Mode mode = Mode.ENCRYPT;
         protected byte[] encryptData = new byte[0];
         protected AlgorithmParameters algorithmParameters;
         protected Provider provider;

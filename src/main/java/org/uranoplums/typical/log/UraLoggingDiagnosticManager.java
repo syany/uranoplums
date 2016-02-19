@@ -17,7 +17,8 @@
  */
 package org.uranoplums.typical.log;
 
-import java.util.ArrayList;
+import static org.uranoplums.typical.collection.factory.UraListFactory.*;
+
 import java.util.List;
 
 import org.apache.commons.lang3.ObjectUtils;
@@ -38,7 +39,7 @@ public class UraLoggingDiagnosticManager extends UraObject {
     /** 唯一のロギング診断管理クラス */
     private static final UraLoggingDiagnosticManager INSTANCE = new UraLoggingDiagnosticManager();
     /** MDCキーリスト情報 */
-    private static final List<String> MDC_KEY_LIST = new ArrayList<String>();
+    private static final List<String> MDC_KEY_LIST = newArrayList();
     /**  */
     public static final String IP_ADDRESS = "IP";
     /**  */
