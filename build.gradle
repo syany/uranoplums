@@ -3,7 +3,7 @@ apply plugin: 'maven'
 apply plugin: 'eclipse'
 
 def defaultEncoding = 'UTF-8'
-[compileJava, compileTestJava]*.options*.encoding = defaultEncoding
+[compileJava, compileTestJava, javadoc]*.options*.encoding = defaultEncoding
 
 targetCompatibility = 1.6
 sourceCompatibility = 1.6
