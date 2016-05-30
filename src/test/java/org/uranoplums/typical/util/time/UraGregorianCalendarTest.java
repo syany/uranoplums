@@ -22,6 +22,7 @@ import static org.uranoplums.typical.collection.factory.UraListFactory.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -312,5 +313,35 @@ public class UraGregorianCalendarTest {
 
         cal.compareDate(calb.getCalendar());
         assertTrue(true);
+    }
+
+    @Test
+    public void testInstance01() {
+        Calendar ext = Calendar.getInstance();
+        UraCalendar c = UraCalendarUtils.newUraCalendar(ext);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS Z");
+        String extStr = sdf.format(ext.getTime());
+        String actStr = c.format("yyyy-MM-dd hh:mm:ss.SSS Z");
+        assertEquals(extStr, actStr);
+    }
+
+    @Test
+    public void testInstance02() {
+        Calendar ext = Calendar.getInstance(UraLocale.FRENCH);
+        UraCalendar c = new UraGregorianCalendar(ext, UraLocale.FRENCH);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS Z");
+        String extStr = sdf.format(ext.getTime());
+        String actStr = c.format("yyyy-MM-dd hh:mm:ss.SSS Z");
+        assertEquals(extStr, actStr);
+    }
+
+    @Test
+    public void testInstance03() {
+        Calendar ext = new GregorianCalendar(1956, 6, 23);
+        UraCalendar c = new UraGregorianCalendar(1956, 6, 23);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS Z");
+        String extStr = sdf.format(ext.getTime());
+        String actStr = c.format("yyyy-MM-dd hh:mm:ss.SSS Z");
+        assertEquals(extStr, actStr);
     }
 }

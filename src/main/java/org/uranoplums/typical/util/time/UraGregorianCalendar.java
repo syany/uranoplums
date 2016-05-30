@@ -28,6 +28,7 @@ import java.util.TimeZone;
 
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.commons.lang3.time.FastDateFormat;
+import org.uranoplums.typical.util.i18n.UraLocale;
 
 /**
  * UraGregorianCalendarクラス。<br>
@@ -48,6 +49,7 @@ public class UraGregorianCalendar extends GregorianCalendar implements UraCalend
      */
     public UraGregorianCalendar() {
         super();
+        this.locale = UraLocale.getDefault();
     }
 
     /* (非 Javadoc)
@@ -68,7 +70,7 @@ public class UraGregorianCalendar extends GregorianCalendar implements UraCalend
      * @param calendar
      */
     public UraGregorianCalendar(Calendar calendar) {
-        super();
+        this();
         this.setTimeInMillis(calendar.getTimeInMillis());
     }
 
@@ -78,7 +80,7 @@ public class UraGregorianCalendar extends GregorianCalendar implements UraCalend
      * @param aLocale
      */
     public UraGregorianCalendar(Calendar calendar, Locale aLocale) {
-        super(aLocale);
+        this(aLocale);
         this.setTimeInMillis(calendar.getTimeInMillis());
     }
 
@@ -88,7 +90,7 @@ public class UraGregorianCalendar extends GregorianCalendar implements UraCalend
      * @param zone
      */
     public UraGregorianCalendar(Calendar calendar, TimeZone zone) {
-        super(zone);
+        this(zone);
         this.setTimeInMillis(calendar.getTimeInMillis());
     }
 
@@ -99,7 +101,7 @@ public class UraGregorianCalendar extends GregorianCalendar implements UraCalend
      * @param aLocale
      */
     public UraGregorianCalendar(Calendar calendar, TimeZone zone, Locale aLocale) {
-        super(zone, aLocale);
+        this(zone, aLocale);
         this.setTimeInMillis(calendar.getTimeInMillis());
     }
 
@@ -110,7 +112,7 @@ public class UraGregorianCalendar extends GregorianCalendar implements UraCalend
      * @param dayOfMonth
      */
     public UraGregorianCalendar(int year, int month, int dayOfMonth) {
-        super(year, month, dayOfMonth);
+        this(year, month, dayOfMonth, 0, 0, 0);
     }
 
     /**
@@ -122,7 +124,7 @@ public class UraGregorianCalendar extends GregorianCalendar implements UraCalend
      * @param minute
      */
     public UraGregorianCalendar(int year, int month, int dayOfMonth, int hourOfDay, int minute) {
-        super(year, month, dayOfMonth, hourOfDay, minute);
+        this(year, month, dayOfMonth, hourOfDay, minute, 0);
     }
 
     /**
@@ -135,7 +137,7 @@ public class UraGregorianCalendar extends GregorianCalendar implements UraCalend
      * @param second
      */
     public UraGregorianCalendar(int year, int month, int dayOfMonth, int hourOfDay, int minute, int second) {
-        super(year, month, dayOfMonth, hourOfDay, minute, second);
+        this(year, month, dayOfMonth, hourOfDay, minute, second, 0);
     }
 
     /**
@@ -151,6 +153,7 @@ public class UraGregorianCalendar extends GregorianCalendar implements UraCalend
     public UraGregorianCalendar(int year, int month, int dayOfMonth, int hourOfDay, int minute, int second, int millis) {
         super(year, month, dayOfMonth, hourOfDay, minute, second);
         this.setMilliseconds(millis);
+        this.locale = UraLocale.getDefault();
     }
 
     /**
@@ -158,7 +161,8 @@ public class UraGregorianCalendar extends GregorianCalendar implements UraCalend
      * @param aLocale
      */
     public UraGregorianCalendar(Locale aLocale) {
-        super(aLocale);
+        this(TimeZone.getDefault(), aLocale);
+//        super(aLocale);
     }
 
     /**
@@ -166,7 +170,7 @@ public class UraGregorianCalendar extends GregorianCalendar implements UraCalend
      * @param zone
      */
     public UraGregorianCalendar(TimeZone zone) {
-        super(zone);
+        this(zone, UraLocale.getDefault());
     }
 
     /**
@@ -176,6 +180,7 @@ public class UraGregorianCalendar extends GregorianCalendar implements UraCalend
      */
     public UraGregorianCalendar(TimeZone zone, Locale aLocale) {
         super(zone, aLocale);
+        this.locale = aLocale;
     }
 
     /**

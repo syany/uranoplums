@@ -26,14 +26,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.io.Reader;
-import java.io.StringWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.lang3.SystemUtils;
 import org.uranoplums.typical.log.UraLogger;
 import org.uranoplums.typical.log.UraLoggerFactory;
 import org.uranoplums.typical.util.UraClassUtils;
@@ -55,22 +54,22 @@ public class UraRWUtils extends UraUtils {
     /**  */
     public static final char DIR_SEPARATOR_WINDOWS = '\\';
     /**  */
-    public static final String LINE_SEPARATOR;
+    public static final String LINE_SEPARATOR = SystemUtils.FILE_SEPARATOR;
     /**  */
     public static final String LINE_SEPARATOR_UNIX = "\n";
     /**  */
     public static final String LINE_SEPARATOR_WINDOWS = "\r\n";
 
     /**  */
-    protected static final UraLogger<String> LOGGER;
-    static {
-        LOGGER = new UraInnerCodeLog(UraLoggerFactory.getLogger());
+    protected static final UraLogger<String> LOGGER = new UraInnerCodeLog(UraLoggerFactory.getLogger());
+//    static {
+//        LOGGER = new UraInnerCodeLog(UraLoggerFactory.getLogger());
 
-        StringWriter buf = new StringWriter(4);
-        PrintWriter out = new PrintWriter(buf);
-        out.println();
-        LINE_SEPARATOR = buf.toString();
-    }
+//        StringWriter buf = new StringWriter(4);
+//        PrintWriter out = new PrintWriter(buf);
+//        out.println();
+//        LINE_SEPARATOR = buf.toString();
+//    }
 
     /**
      * 。<br>

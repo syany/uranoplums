@@ -26,8 +26,12 @@ import org.uranoplums.typical.io.UraIOUtils;
 import org.uranoplums.typical.util.UraStringUtils;
 
 /**
- * UraPropertyResourceクラス。<br>
- *
+ * プロパティリソースクラス。<br>
+ * ResourceBundleのようにプロパティリソースを取得する。<br>
+ * <pre>
+ * UraPropertyResource res = new UraPropertyResource("application");
+ * String mes = res.getResourceValue(UraLocale.JAPANESE, "mes.001", "キー");
+ * </pre>
  * @since 2015/02/25
  * @author syany
  */
@@ -37,7 +41,8 @@ public class UraPropertyResource extends AbsUraStringResource {
     private static final long serialVersionUID = 6576578909615600978L;
 
     /**
-     * @param config
+     * コンストラクタ。<br>
+     * @param config ロケールなしのプロパティファイル名
      */
     public UraPropertyResource(String config) {
         super(config);

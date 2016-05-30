@@ -25,7 +25,7 @@ import org.uranoplums.typical.util.UraStringUtils;
  *
  */
 public enum UraCharset {
-    /**  */
+    /** 唯一のインスタンス */
     ME;
 
     /**  */
