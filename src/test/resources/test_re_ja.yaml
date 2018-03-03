@@ -1,0 +1,18 @@
+data1: AAA
+data2:
+  - aaa
+  - bbb
+  - ccc
+  - $(name)
+data3:
+  zzz: ZZZ
+  yyy: YYY
+  xxx:
+    ttt: SSS
+    yyy: UUU
+    III:
+      - ttt
+      - 098$(come)!!
+      - rty
+name: ジョー
+come: こんにちは、$(name)!
