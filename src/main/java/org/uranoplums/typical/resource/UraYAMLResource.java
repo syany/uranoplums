@@ -24,9 +24,8 @@ import java.util.Map;
 
 import org.uranoplums.typical.util.UraStringUtils;
 import org.yaml.snakeyaml.Yaml;
-
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonSyntaxException;
+import org.yaml.snakeyaml.error.YAMLException;
+import org.yaml.snakeyaml.scanner.ScannerException;
 
 /**
  * UraYAMLResourceクラス。<br>
@@ -68,31 +67,24 @@ public class UraYAMLResource extends AbsUraHierarchyResource {
         }
         try {
             isr = new InputStreamReader(is, this.defaultCharset);
-            // JSON解析
+            // YAML解析
             // Mapタイプで取得
             Yaml yaml = new Yaml();
-//            Type HASH_MAP_TYPE = new HashMap<String, Object>() {
-//            }.getClass().getGenericSuperclass();
             @SuppressWarnings("unchecked")
-            Map<String, Object> jsonMap = yaml.loadAs(isr, Map.class);
-//            Gson gson = new Gson();
-//            Type mapType = new TypeToken<Map<String, Object>>() {}.getType();
-//            Map<String, Object> jsonMap = gson.fromJson(isr, mapType);
-            if (jsonMap.size() < 1) {
+            Map<String, Object> resourceMap = yaml.loadAs(isr, Map.class);
+            if (resourceMap.size() < 1) {
                 return;
             }
-            // immutable
-            //jsonMap = UraCollectionUtils.deepUnmodifiableMap(jsonMap);
             // ロケール別にリソースマップへput
-            for (final Map.Entry<String, Object> entry : jsonMap.entrySet()) {
+            for (final Map.Entry<String, Object> entry : resourceMap.entrySet()) {
                 String key = entry.getKey();
                 logger.trace("  Saving message key '"
                         + valueKey(localeKey, key));
                 resources.put(valueKey(localeKey, key), entry.getValue());
             }
-        } catch (JsonSyntaxException e) {
+        } catch (ScannerException e) {
             throw new IOException(e);
-        } catch (JsonIOException e) {
+        } catch (YAMLException e) {
             throw new IOException(e);
         } finally {
             try {

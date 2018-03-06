@@ -82,5 +82,28 @@ public class UraYAMLResourceTest {
         System.out.println("maps are:" + data3);
         assertTrue(true);
     }
+    @Test
+    public void testUraYAMLResourceMap4() {
+        Map<Object, Object> data3 = uraYAMLResource.getResourceMap("data3");
+        System.out.println("maps are:" + data3);
+        data3.put("yyy", "edited!");
+        Map<Object, Object> data4 = uraYAMLResource.getResourceMap("data3");
+        System.out.println("edited maps are:" + data4);
+        assertTrue(true);
+    }
 
+    @Test
+    public void testUraYAMLResource5() {
+        uraYAMLResource = new UraYAMLResource("noyaml");
+        String str = uraYAMLResource.getResourceString("name");
+        System.out.println("string are:" + str);
+        assertTrue(true);
+    }
+    @Test
+    public void testUraYAMLResource6() {
+        uraYAMLResource = new UraYAMLResource("noyaml2");
+        String str = uraYAMLResource.getResourceString("name");
+        System.out.println("string are:" + str);
+        assertTrue(true);
+    }
 }
