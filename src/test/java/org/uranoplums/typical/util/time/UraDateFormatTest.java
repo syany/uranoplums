@@ -749,4 +749,14 @@ public class UraDateFormatTest {
         target = ldf.format(cal);
         assertEquals("XXXXTTTT", sdf2.format(cal.getDate()), target);
     }
+
+    @Test
+    public void externalTestParseFotmatReiwa() {
+        UraDateFormat udf = UraDateFormat.getInstance("gN年");
+        String testDate = "令和1年";
+        UraCalendar cal = udf.parseUraCalendar(testDate);
+        System.out.println(testDate + "--> [" + cal.getDate() + "]");
+        String actualDate = udf.format(cal);
+        assertEquals(testDate, actualDate);
+    }
 }

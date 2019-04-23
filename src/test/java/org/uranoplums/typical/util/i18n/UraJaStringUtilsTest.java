@@ -157,6 +157,10 @@ public class UraJaStringUtilsTest {
      */
     @Test
     public final void testZenkakuToHankaku() {
-        fail("まだ実装されていません"); // TODO
+    	final String srcZen = "ヱビスノウヰスキー";
+    	final String actHan = UraJaStringUtils.zenkakuToHankaku(srcZen);
+        System.out.println("`"+ srcZen +"' の半角は `"+ actHan +"' です。");
+        final String extHan = "ｴﾋﾞｽﾉｳｲｽｷｰ";
+        assertEquals(extHan, actHan);
     }
 }

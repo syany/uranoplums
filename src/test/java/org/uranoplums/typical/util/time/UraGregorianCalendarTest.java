@@ -344,4 +344,21 @@ public class UraGregorianCalendarTest {
         String actStr = c.format("yyyy-MM-dd hh:mm:ss.SSS Z");
         assertEquals(extStr, actStr);
     }
+
+    @Test
+    public void testInstance04() {
+        // 基本の使い方
+        UraCalendar cal = UraCalendarUtils.newUraCalendar(2019,3,30,0,0,0);
+        //cal.set(2019,3,30,0,0,0);
+        String localeEra = cal.getLocaleEraDisplayName(Locale.JAPAN);
+        String localeYear = cal.getLocaleYearDisplayName(Locale.JAPAN);
+        System.out.println("西暦" + cal.getYear() + "年の"+ cal.format("MM/dd") +"の和暦は" + localeEra + localeYear + "年です。");
+        System.out.println();
+        cal.addDay(1);
+        localeEra = cal.getLocaleEraDisplayName(Locale.JAPAN);
+        localeYear = cal.getLocaleYearDisplayName(Locale.JAPAN);
+        System.out.println("西暦" + cal.getYear() + "年の"+ cal.format("MM/dd") +"の和暦は" + localeEra + localeYear + "年です。");
+        System.out.println();
+        assertTrue(true);
+    }
 }

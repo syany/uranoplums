@@ -177,6 +177,12 @@ public class UraJaStringUtils extends UraStringUtils {
         } else if ((new Character(c)).equals(ZENKAKU_WO_DAKUTEN)) {
             // ヲ"[\u30fa]
             return "ｦﾞ";
+        } else if ((new Character(c)).equals(new Character('ヰ'))) {
+            // ヰ
+            return "ｲ";
+        } else if ((new Character(c)).equals(new Character('ヱ'))) {
+            // ヱ
+            return "ｴ";
         } else {
             // 該当なし
             return null;
